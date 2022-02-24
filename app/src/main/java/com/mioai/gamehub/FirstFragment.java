@@ -12,9 +12,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
-import com.mioai.gamehub.screens.FirstScreen;
-import com.mioai.gamehub.screens.SecondScreen;
-import com.mioai.gamehub.screens.ThirdScreen;
+import com.mioai.gamehub.FirstScreen;
 
 import java.util.ArrayList;
 import java.util.Arrays;
