@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "1077730676805-bqkeb0ia47eclqdlq69m5r9go33m4eqv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mioai.gamehub",
+            "certificate_hash": "ec6ac0ab72f2762d00a90b9a200d275d846f42bf"
+          }
+        },
+        {
           "client_id": "1077730676805-64sqt78t85i2jmb8gct837b0espm9lpd.apps.googleusercontent.com",
           "client_type": 3
         }

@@ -42,7 +42,7 @@ public class AuthRepository
                 }
             } else
             {
-                Log.e(this.getClass().getSimpleName(), authTask.getException().getMessage());
+                Log.e(this.getClass().getSimpleName(), "!!!!!!!!!!!!!!!!!!!!"+authTask.getException().getMessage());
             }
         });
         return authenticatedUserMutableLiveData;
