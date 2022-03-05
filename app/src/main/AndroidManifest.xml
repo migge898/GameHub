@@ -10,7 +10,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GameHub">
         <activity
+            android:name=".LogoutActivity"
+            android:exported="false" />
+        <activity
+            android:name=".RegisterUserActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

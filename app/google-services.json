@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1077730676805",
+    "firebase_url": "https://gamehub-4786a-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "gamehub-4786a",
+    "storage_bucket": "gamehub-4786a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1077730676805:android:cdcd3c60bdb4d01ae9132c",
+        "android_client_info": {
+          "package_name": "com.mioai.gamehub"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1077730676805-64sqt78t85i2jmb8gct837b0espm9lpd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDcdVoEku1-k6-PHISsQUk4om23T-B6s78"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1077730676805-64sqt78t85i2jmb8gct837b0espm9lpd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
