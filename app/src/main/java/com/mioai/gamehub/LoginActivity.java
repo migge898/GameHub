@@ -44,7 +44,6 @@ public class LoginActivity extends AppCompatActivity
             Window w = getWindow();
             w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         }
-        getSupportActionBar().hide();
         setContentView(R.layout.activity_login);
         register = findViewById(R.id.register);
 

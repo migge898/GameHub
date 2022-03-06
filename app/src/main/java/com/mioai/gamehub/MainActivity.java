@@ -37,13 +37,13 @@ public class MainActivity extends AppCompatActivity
                 .build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 
-        listener = (controller, destination, arguments) ->
-        {
-            if (destination.getId() == R.id.firstFragment)
-                getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getColor(R.color.design_default_color_primary_dark)));
-            else if (destination.getId() == R.id.secondFragment)
-                getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getColor(R.color.design_default_color_secondary)));
-        };
+//        listener = (controller, destination, arguments) ->
+//        {
+//            if (destination.getId() == R.id.firstFragment)
+//                getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getColor(R.color.design_default_color_primary_dark)));
+//            else if (destination.getId() == R.id.secondFragment)
+//                getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getColor(R.color.design_default_color_secondary)));
+//        };
     }
 
     @Override
