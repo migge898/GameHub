@@ -16,8 +16,13 @@ public class SecondFragment extends Fragment
     {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_second, container, false);
-        view.findViewById(R.id.textView2).setOnClickListener((v) ->
+
+        view.findViewById(R.id.textView3).setOnClickListener((v) ->
                 Navigation.findNavController(v).navigate(R.id.navigateToFirstFragment));
+
+        view.findViewById(R.id.textView2).setOnClickListener((v) ->
+                Navigation.findNavController(v).navigate(R.id.navigateToAvatarFragment));
+
         return view;
     }
 }

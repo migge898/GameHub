@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:orientation="vertical">
+
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="314dp"
+    android:layout_width="352dp"
+    android:layout_centerHorizontal="true"
+    android:id="@+id/FLavatar"
+    >
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        >
+        <ImageView
+            android:id="@+id/avBody"
+            android:src="@drawable/avatar_body_1"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            >
+        </ImageView>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        >
+        <ImageView
+            android:id="@+id/avEyes"
+            android:src="@drawable/avatar_eyes_angry"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            >
+        </ImageView>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        >
+        <ImageView
+            android:id="@+id/avMouth"
+            android:src="@drawable/avatar_mouths_sad"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            >
+        </ImageView>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        >
+
+        <ImageView
+            android:id="@+id/avNose"
+            android:src="@drawable/avatar_nose"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            >
+        </ImageView>
+    </RelativeLayout>
+
+</FrameLayout>
+
+    <Spinner
+        android:layout_below="@id/FLavatar"
+        android:id="@+id/spinnerEyes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        >
+    </Spinner>
+
+    <Spinner
+        android:layout_below="@id/spinnerEyes"
+        android:id="@+id/spinnerMouths"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        >
+    </Spinner>
+
+
+</RelativeLayout>
