@@ -21,7 +21,7 @@
         >
         <ImageView
             android:id="@+id/avBody"
-            android:src="@drawable/avatar_body_1"
+            android:src="@drawable/avatar_body_real"
             android:layout_height="match_parent"
             android:layout_width="match_parent"
             >
@@ -87,6 +87,32 @@
         android:layout_centerHorizontal="true"
         >
     </Spinner>
+
+    <Spinner
+        android:layout_below="@id/spinnerMouths"
+        android:id="@+id/spinnerBody"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        >
+    </Spinner>
+
+    <Spinner
+        android:layout_below="@id/spinnerBody"
+        android:id="@+id/spinnerNoses"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        >
+    </Spinner>
+
+    <Button
+        android:id="@+id/save_Avatar"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/spinnerNoses"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save" />
 
 
 </RelativeLayout>
