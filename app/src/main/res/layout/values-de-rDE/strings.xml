@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Schere Stein Papier - Multiplayer</string>
-    <string name="fight">Kämpfe!</string>
-    <string name="schere">Schere</string>
-    <string name="stein">Stein</string>
     <string name="papier">Papier</string>
     <string name="waiting">Warte…</string>
     <string name="tie">Unentschieden</string>

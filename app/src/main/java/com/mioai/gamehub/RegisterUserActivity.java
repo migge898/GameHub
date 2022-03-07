@@ -42,7 +42,6 @@ public class RegisterUserActivity extends AppCompatActivity
 
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
-
     }
 
     public void onBannerClick(View view)

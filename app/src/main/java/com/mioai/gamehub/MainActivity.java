@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         navController = Navigation.findNavController(this, R.id.fragment);
+        Navigation.setViewNavController(findViewById(R.id.navBtn), navController);
         drawerLayout = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.navigationView);
         NavigationUI.setupWithNavController(navigationView, navController);
@@ -37,13 +38,6 @@ public class MainActivity extends AppCompatActivity
                 .build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 
-//        listener = (controller, destination, arguments) ->
-//        {
-//            if (destination.getId() == R.id.firstFragment)
-//                getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getColor(R.color.design_default_color_primary_dark)));
-//            else if (destination.getId() == R.id.secondFragment)
-//                getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getColor(R.color.design_default_color_secondary)));
-//        };
     }
 
     @Override
