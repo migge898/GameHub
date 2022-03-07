@@ -19,9 +19,10 @@
         <item name="fullscreenTextColor">@color/light_blue_A200</item>
     </style>
 
-    <style name="Theme.GameHub.NoActionBarAndStatusBar">
+    <style name="Theme.GameHub.NoActionBarAndStatusBar" parent="Theme.MaterialComponents.Light.DarkActionBar">
 
         <item name="windowNoTitle">true</item>
         <item name="android:statusBarColor">@color/white</item>
+
     </style>
 </resources>

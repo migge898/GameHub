@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/my_nav"
-    app:startDestination="@id/firstFragment">
+    app:startDestination="@id/mainFragment">
 
     <fragment
         android:id="@+id/firstFragment"
@@ -20,11 +20,32 @@
         android:id="@+id/secondFragment"
         android:name="com.mioai.gamehub.SecondFragment"
         android:label="fragment_second"
-        tools:layout="@layout/fragment_second">
+        tools:layout="@layout/fragment_second" />
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.mioai.gamehub.MainFragment"
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_main">
         <action
-            android:id="@+id/navigateToFirstFragment"
-            app:destination="@id/firstFragment"
-            app:enterAnim="@android:anim/fade_in"
-            app:exitAnim="@android:anim/fade_out" />
+            android:id="@+id/action_mainFragment_to_firstFragment"
+            app:destination="@id/firstFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.mioai.gamehub.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_registerUserFragment2"
+            app:destination="@id/registerUserFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerUserFragment"
+        android:name="com.mioai.gamehub.RegisterUserFragment"
+        android:label="fragment_register_user"
+        tools:layout="@layout/fragment_register_user" />
+
 </navigation>

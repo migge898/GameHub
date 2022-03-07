@@ -1,19 +1,20 @@
 package com.mioai.gamehub;
 
 import static com.mioai.gamehub.utils.Constants.RC_SIGN_IN;
-import static com.mioai.gamehub.utils.Constants.USER;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
+import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -27,8 +28,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.mioai.gamehub.viewmodel.AuthViewModel;
 
-
-public class LoginActivity extends AppCompatActivity
+public class LoginFragment extends Fragment
 {
     private TextView register;
 
@@ -37,15 +37,27 @@ public class LoginActivity extends AppCompatActivity
     private AuthViewModel authViewModel;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState)
     {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-        register = findViewById(R.id.register);
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_login, container, false);
+    }
+
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
+    {
+        register = view.findViewById(R.id.register);
 
         initGoogleSignInButton();
         initAuthViewModel();
         initGoogleSignInClient();
+
+        register.setOnClickListener(v ->
+        {
+            Navigation.findNavController(v).navigate(R.id.registerUserFragment);
+        });
     }
 
     private void initGoogleSignInClient()
@@ -56,7 +68,7 @@ public class LoginActivity extends AppCompatActivity
                 .requestEmail()
                 .build();
 
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+        mGoogleSignInClient = GoogleSignIn.getClient(getActivity(), gso);
     }
 
     private void initAuthViewModel()
@@ -67,7 +79,7 @@ public class LoginActivity extends AppCompatActivity
     private void initGoogleSignInButton()
     {
 
-        SignInButton signInGoogle = (SignInButton) findViewById(R.id.sign_in_button);
+        SignInButton signInGoogle = (SignInButton) getActivity().findViewById(R.id.sign_in_button);
         signInGoogle.setOnClickListener(v -> signIn());
     }
 
@@ -82,7 +94,8 @@ public class LoginActivity extends AppCompatActivity
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    @SuppressWarnings("deprecation")
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data)
     {
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -100,7 +113,7 @@ public class LoginActivity extends AppCompatActivity
             } catch (ApiException e)
             {
                 // Google Sign In failed, update UI appropriately
-                Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+
 
             }
         }
@@ -130,10 +143,7 @@ public class LoginActivity extends AppCompatActivity
 
     private void goToMainActivity(User user)
     {
-        Intent intent = new Intent(LoginActivity.this, LogoutActivity.class);
-        intent.putExtra(USER, user);
-        startActivity(intent);
-        finish();
+        // TODO: 07.03.2022
     }
 
     private void createNewUser(User authenticatedUser)
@@ -141,8 +151,7 @@ public class LoginActivity extends AppCompatActivity
         authViewModel.createUser(authenticatedUser);
         authViewModel.getCreatedUserLiveData().observe(this, user ->
         {
-            if (user.isCreated())
-                Toast.makeText(this, user.getFullName(), Toast.LENGTH_SHORT).show();
+
 
             // TODO: 10.02.2022: Go to start screen
         });
@@ -150,6 +159,6 @@ public class LoginActivity extends AppCompatActivity
 
     public void onRegister(View view)
     {
-        startActivity(new Intent(this, RegisterUserActivity.class));
+        Navigation.findNavController(view).navigate(R.id.registerUserFragment);
     }
 }

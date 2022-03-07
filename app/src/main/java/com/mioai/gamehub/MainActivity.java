@@ -2,8 +2,10 @@ package com.mioai.gamehub;
 
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -26,9 +28,7 @@ public class MainActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         navController = Navigation.findNavController(this, R.id.fragment);
-        Navigation.setViewNavController(findViewById(R.id.navBtn), navController);
         drawerLayout = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.navigationView);
         NavigationUI.setupWithNavController(navigationView, navController);
@@ -40,25 +40,25 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    @Override
-    protected void onResume()
-    {
-        super.onResume();
-        navController.addOnDestinationChangedListener(listener);
-    }
+//    @Override
+//    protected void onResume()
+//    {
+//        super.onResume();
+//        navController.addOnDestinationChangedListener(listener);
+//    }
 
-    @Override
-    protected void onPause()
-    {
-        super.onPause();
-        navController.removeOnDestinationChangedListener(listener);
-    }
-
-    @Override
-    public boolean onSupportNavigateUp()
-    {
-        navController = Navigation.findNavController(this, R.id.fragment);
-        return NavigationUI.navigateUp(navController, appBarConfiguration)
-                || super.onSupportNavigateUp();
-    }
+//    @Override
+//    protected void onPause()
+//    {
+//        super.onPause();
+//        navController.removeOnDestinationChangedListener(listener);
+//    }
+//
+//    @Override
+//    public boolean onSupportNavigateUp()
+//    {
+//        navController = Navigation.findNavController(this, R.id.fragment);
+//        return NavigationUI.navigateUp(navController, appBarConfiguration)
+//                || super.onSupportNavigateUp();
+//    }
 }

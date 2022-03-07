@@ -1,22 +1,30 @@
 package com.mioai.gamehub;
 
-import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+
 import android.util.Patterns;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class RegisterUserActivity extends AppCompatActivity
+import java.util.concurrent.atomic.AtomicBoolean;
+
+public class RegisterUserFragment extends Fragment
 {
     private TextView banner, registerUser;
     private EditText editTextFullName, editTextAge, editTextEmail, editTextPassword;
@@ -24,36 +32,39 @@ public class RegisterUserActivity extends AppCompatActivity
 
     private FirebaseAuth mAuth;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register_user);
+    private NavController navController;
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState)
+    {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_register_user, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
+    {
+        super.onViewCreated(view, savedInstanceState);
         mAuth = FirebaseAuth.getInstance();
 
-        banner = findViewById(R.id.banner);
-        registerUser = (Button) findViewById(R.id.registerUser);
+        banner = view.findViewById(R.id.banner);
+        registerUser = (Button) view.findViewById(R.id.registerUser);
 
-        editTextFullName = (EditText) findViewById(R.id.fullName);
-        editTextAge = (EditText) findViewById(R.id.age);
-        editTextEmail = (EditText) findViewById(R.id.email);
-        editTextPassword = (EditText) findViewById(R.id.password);
+        editTextFullName = (EditText) view.findViewById(R.id.fullName);
+        editTextAge = (EditText) view.findViewById(R.id.age);
+        editTextEmail = (EditText) view.findViewById(R.id.email);
+        editTextPassword = (EditText) view.findViewById(R.id.password);
 
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
 
+        navController = Navigation.findNavController(registerUser);
+        registerUser.setOnClickListener(v -> registerUser());
     }
 
-    public void onBannerClick(View view)
-    {
-        startActivity(new Intent(this, LoginActivity.class));
-    }
-
-    public void onRegisterClick(View view)
-    {
-        registerUser();
-    }
-
+    /**
+     * If successful redirects to {@link FirstFragment}
+     */
     private void registerUser()
     {
         String email = editTextEmail.getText().toString().trim();
@@ -105,6 +116,7 @@ public class RegisterUserActivity extends AppCompatActivity
             return;
         }
 
+
         progressBar.setVisibility(View.VISIBLE);
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task ->
         {
@@ -123,18 +135,21 @@ public class RegisterUserActivity extends AppCompatActivity
                 {
                     if (task1.isSuccessful())
                     {
-                        Toast.makeText(RegisterUserActivity.this, getString(R.string.register_success), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), getString(R.string.register_success), Toast.LENGTH_LONG).show();
+                        navController.navigate(R.id.firstFragment);
                     } else
                     {
-                        Toast.makeText(RegisterUserActivity.this, getString(R.string.register_failed), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), getString(R.string.register_failed), Toast.LENGTH_LONG).show();
                     }
                     progressBar.setVisibility(View.GONE);
                 });
             } else
             {
-                Toast.makeText(RegisterUserActivity.this, getString(R.string.register_failed), Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), getString(R.string.register_failed), Toast.LENGTH_LONG).show();
                 progressBar.setVisibility(View.GONE);
             }
+
         });
+
     }
 }
