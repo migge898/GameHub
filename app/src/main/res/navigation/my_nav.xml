@@ -8,7 +8,6 @@
     <fragment
         android:id="@+id/firstFragment"
         android:name="com.mioai.gamehub.FirstFragment"
-        android:label="fragment_first"
         tools:layout="@layout/fragment_first">
         <action
             android:id="@+id/navigateToSecondFragment"
@@ -19,7 +18,6 @@
     <fragment
         android:id="@+id/secondFragment"
         android:name="com.mioai.gamehub.SecondFragment"
-        android:label="fragment_second"
         tools:layout="@layout/fragment_second" />
     <fragment
         android:id="@+id/mainFragment"
@@ -37,7 +35,6 @@
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.mioai.gamehub.LoginFragment"
-        android:label="fragment_login"
         tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_loginFragment_to_registerUserFragment"
@@ -51,7 +48,6 @@
     <fragment
         android:id="@+id/registerUserFragment"
         android:name="com.mioai.gamehub.RegisterUserFragment"
-        android:label="fragment_register_user"
         tools:layout="@layout/fragment_register_user">
         <action
             android:id="@+id/action_registerUserFragment_to_firstFragment"
