@@ -26,7 +26,6 @@ public class MainActivity extends AppCompatActivity implements FirebaseAuth.Auth
     private DrawerLayout drawerLayout;
     private AppBarConfiguration appBarConfiguration;
 
-    private NavController.OnDestinationChangedListener listener;
     private boolean doubleBackToExitPressedOnce = false;
 
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
@@ -58,45 +57,11 @@ public class MainActivity extends AppCompatActivity implements FirebaseAuth.Auth
 
     }
 
-
-    private void exitOnDoubleBackPressed()
-    {
-        if (doubleBackToExitPressedOnce)
-        {
-            super.onBackPressed();
-            return;
-        }
-
-        this.doubleBackToExitPressedOnce = true;
-        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
-
-        new Handler(Looper.getMainLooper()).postDelayed(() -> doubleBackToExitPressedOnce = false, 2000);
-    }
-
     @Override
-    public void onBackPressed()
+    protected void onStart()
     {
-        super.onBackPressed();
-        int fragmentCount = getSupportFragmentManager().getBackStackEntryCount();
-        MainFragment fragment = (MainFragment) getSupportFragmentManager().findFragmentById(R.id.mainFragment);
-        if(fragment != null && fragment.isVisible())
-            exitOnDoubleBackPressed();
-        else
-            super.onBackPressed();
-//        if (fragmentCount == 0)
-//        {
-//            exitOnDoubleBackPressed();
-//        } else
-//        {
-//            if (fragmentCount > 1)
-//            {
-//                getFragmentManager().popBackStack();
-//            } else
-//            {
-//                super.onBackPressed();
-//            }
-//
-//        }
+        super.onStart();
+        firebaseAuth.addAuthStateListener(this);
     }
 
     @Override
@@ -108,6 +73,8 @@ public class MainActivity extends AppCompatActivity implements FirebaseAuth.Auth
             navController.navigate(R.id.loginFragment);
             Toast.makeText(this, getString(R.string.auth_failed), Toast.LENGTH_SHORT).show();
         }
+        else
+            navController.navigate(R.id.action_mainFragment_to_firstFragment);
 
     }
 
