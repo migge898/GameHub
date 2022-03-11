@@ -1,5 +1,6 @@
 package com.mioai.gamehub;
 
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity implements FirebaseAuth.Auth
     private NavController navController;
     private DrawerLayout drawerLayout;
     private AppBarConfiguration appBarConfiguration;
+    private NavController.OnDestinationChangedListener listener;
 
     private boolean doubleBackToExitPressedOnce = false;
 
@@ -45,15 +47,16 @@ public class MainActivity extends AppCompatActivity implements FirebaseAuth.Auth
                 .build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 
-        navController.addOnDestinationChangedListener((_c, destination, _b) ->
+        listener = (_c, destination, _b) ->
         {
             if (destination.getId() == R.id.mainFragment ||
                     destination.getId() == R.id.loginFragment ||
                     destination.getId() == R.id.registerUserFragment)
+            {
                 drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-            else
+            } else
                 drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-        });
+        };
 
     }
 
@@ -68,14 +71,35 @@ public class MainActivity extends AppCompatActivity implements FirebaseAuth.Auth
     public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth)
     {
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-        if(firebaseUser == null)
+        if (firebaseUser == null)
         {
             navController.navigate(R.id.loginFragment);
             Toast.makeText(this, getString(R.string.auth_failed), Toast.LENGTH_SHORT).show();
-        }
-        else
+        } else
             navController.navigate(R.id.action_mainFragment_to_firstFragment);
 
+    }
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        navController.addOnDestinationChangedListener(listener);
+    }
+
+    @Override
+    protected void onPause()
+    {
+        super.onPause();
+        navController.removeOnDestinationChangedListener(listener);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp()
+    {
+        navController = Navigation.findNavController(this, R.id.fragment);
+        return NavigationUI.navigateUp(navController, appBarConfiguration)
+                || super.onSupportNavigateUp();
     }
 
 }
