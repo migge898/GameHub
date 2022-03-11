@@ -22,8 +22,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.concurrent.atomic.AtomicBoolean;
-
 public class RegisterUserFragment extends Fragment
 {
     private TextView banner, registerUser;
@@ -51,10 +49,10 @@ public class RegisterUserFragment extends Fragment
         banner = view.findViewById(R.id.banner);
         registerUser = (Button) view.findViewById(R.id.registerUser);
 
-        editTextFullName = (EditText) view.findViewById(R.id.fullName);
+        editTextFullName = (EditText) view.findViewById(R.id.username);
         editTextAge = (EditText) view.findViewById(R.id.age);
-        editTextEmail = (EditText) view.findViewById(R.id.email);
-        editTextPassword = (EditText) view.findViewById(R.id.password);
+        editTextEmail = (EditText) view.findViewById(R.id.login_email);
+        editTextPassword = (EditText) view.findViewById(R.id.login_password);
 
         progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
 
@@ -136,7 +134,7 @@ public class RegisterUserFragment extends Fragment
                     if (task1.isSuccessful())
                     {
                         Toast.makeText(getActivity(), getString(R.string.register_success), Toast.LENGTH_LONG).show();
-                        navController.navigate(R.id.firstFragment);
+                        navController.navigate(R.id.action_registerUserFragment_to_firstFragment);
                     } else
                     {
                         Toast.makeText(getActivity(), getString(R.string.register_failed), Toast.LENGTH_LONG).show();

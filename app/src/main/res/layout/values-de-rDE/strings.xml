@@ -23,4 +23,10 @@
     <string name="auth_failed">Authentifizierung fehlgeschlagen.</string>
     <string name="logout">ausloggen</string>
     <string name="start">Start</string>
+    <string name="login_failed">Login ge</string>
+    <string name="login_failed">Login fehlgeschlagen! Email oder Passwort ist falsch.</string>
+    <string name="choose_username">Wähle einen öffentlich sichtbaren Benutzernamen:</string>
+    <string name="username">Benutzername</string>
+    <string name="accept">Bestätigen</string>
+    <string name="googleSignInFailed">Google Login fehlgeschlagen!</string>
 </resources>

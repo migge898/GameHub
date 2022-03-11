@@ -32,12 +32,18 @@ public class AuthViewModel extends AndroidViewModel
         return authenticatedUserLiveData;
     }
 
-    public void createUser(User authenticatedUser) {
+    public void createUser(User authenticatedUser)
+    {
         createdUserLiveData = authRepository.createUserInFirebaseDBIfNotExists(authenticatedUser);
     }
 
     public LiveData<User> getCreatedUserLiveData()
     {
         return createdUserLiveData;
+    }
+
+    public void signInWithEmailAndPassword(String email, String password)
+    {
+        authenticatedUserLiveData = authRepository.firebaseSignInWithEmailAndPassword(email, password);
     }
 }

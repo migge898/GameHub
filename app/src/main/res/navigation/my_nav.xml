@@ -24,7 +24,6 @@
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.mioai.gamehub.MainFragment"
-        android:label="fragment_main"
         tools:layout="@layout/fragment_main">
         <action
             android:id="@+id/action_mainFragment_to_firstFragment"
@@ -37,15 +36,26 @@
         android:id="@+id/loginFragment"
         android:name="com.mioai.gamehub.LoginFragment"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_login" >
+        tools:layout="@layout/fragment_login">
         <action
-            android:id="@+id/action_loginFragment_to_registerUserFragment2"
+            android:id="@+id/action_loginFragment_to_registerUserFragment"
             app:destination="@id/registerUserFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_firstFragment"
+            app:destination="@id/firstFragment"
+            app:popUpTo="@id/my_nav"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/registerUserFragment"
         android:name="com.mioai.gamehub.RegisterUserFragment"
         android:label="fragment_register_user"
-        tools:layout="@layout/fragment_register_user" />
+        tools:layout="@layout/fragment_register_user">
+        <action
+            android:id="@+id/action_registerUserFragment_to_firstFragment"
+            app:destination="@id/firstFragment"
+            app:popUpTo="@id/my_nav"
+            app:popUpToInclusive="true" />
+    </fragment>
 
 </navigation>

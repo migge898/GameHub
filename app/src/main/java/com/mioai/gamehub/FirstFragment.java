@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -50,7 +51,23 @@ public class FirstFragment extends Fragment
         viewPager.setAdapter(demoCollectionAdapter);
         TabLayout tabLayout = view.findViewById(R.id.tab_layout);
         new TabLayoutMediator(tabLayout, viewPager,
-                (tab, position) -> tab.setText("OBJECT " + (position + 1))
+                (tab, position) ->
+                {
+                    switch (position)
+                    {
+                        case 0:
+                            tab.setText("Single");
+                            break;
+                        case 1:
+                            tab.setText("Multi");
+                            break;
+                        case 2:
+                            tab.setText("Coop");
+                            break;
+                    }
+
+                }
         ).attach();
     }
+
 }

@@ -28,4 +28,9 @@
     <string name="web_client_id" translatable="false">1077730676805-64sqt78t85i2jmb8gct837b0espm9lpd.apps.googleusercontent.com</string>
     <string name="logout">logout</string>
     <string name="start">Start</string>
+    <string name="login_failed">Failed to login! Email or password is incorrect.</string>
+    <string name="choose_username">Choose a public visible username:</string>
+    <string name="username">Username</string>
+    <string name="accept">Accept</string>
+    <string name="googleSignInFailed">Google sign in failed!</string>
 </resources>

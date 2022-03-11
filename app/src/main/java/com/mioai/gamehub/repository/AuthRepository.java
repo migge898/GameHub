@@ -1,6 +1,7 @@
 package com.mioai.gamehub.repository;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
 
@@ -10,12 +11,13 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.mioai.gamehub.R;
 import com.mioai.gamehub.User;
 
 public class AuthRepository
 {
     private final static String FIREBASE_DB_URL = "https://gamehub-4786a-default-rtdb.europe-west1.firebasedatabase.app/";
-    private final static String USERS = "Users/";
+    private final static String USERS = "Users";
 
     private final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private final FirebaseDatabase rootRef = FirebaseDatabase.getInstance(FIREBASE_DB_URL);
@@ -31,7 +33,7 @@ public class AuthRepository
             {
                 boolean isNewUser = authTask.getResult().getAdditionalUserInfo().isNewUser();
                 FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-                if (firebaseUser != null)
+                if (firebaseUser != null && firebaseUser.isEmailVerified())
                 {
                     String uid = firebaseUser.getUid();
                     String name = firebaseUser.getDisplayName();
@@ -39,10 +41,14 @@ public class AuthRepository
                     User user = new User(uid, name, email);
                     user.setNew(isNewUser);
                     authenticatedUserMutableLiveData.setValue(user);
+                } else if (!firebaseUser.isEmailVerified())
+                {
+                    firebaseUser.sendEmailVerification();
                 }
+
             } else
             {
-                Log.e(this.getClass().getSimpleName(), "!!!!!!!!!!!!!!!!!!!!"+authTask.getException().getMessage());
+                Log.e(this.getClass().getSimpleName(), "!!!!!!!!!!!!!!!!!!!!" + authTask.getException().getMessage());
             }
         });
         return authenticatedUserMutableLiveData;
@@ -80,6 +86,32 @@ public class AuthRepository
 
             }
         });
-        return null;
+        return newUserMutableLiveData;
+    }
+
+    public MutableLiveData<User> firebaseSignInWithEmailAndPassword(String login_email, String login_password)
+    {
+        MutableLiveData<User> authenticatedUserMutableLiveData = new MutableLiveData<>();
+        firebaseAuth.signInWithEmailAndPassword(login_email, login_password).addOnCompleteListener(authTask ->
+        {
+            if (authTask.isSuccessful())
+            {
+                boolean isNewUser = authTask.getResult().getAdditionalUserInfo().isNewUser();
+                FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                if (firebaseUser != null)
+                {
+                    String uid = firebaseUser.getUid();
+                    String name = firebaseUser.getDisplayName();
+                    String email = firebaseUser.getEmail();
+                    User user = new User(uid, name, email);
+                    user.setNew(isNewUser);
+                    authenticatedUserMutableLiveData.setValue(user);
+                }
+            } else
+            {
+                Log.e(this.getClass().getSimpleName(), "!!!!!!!!!!!!!!!!!!!!" + authTask.getException().getMessage());
+            }
+        });
+        return authenticatedUserMutableLiveData;
     }
 }

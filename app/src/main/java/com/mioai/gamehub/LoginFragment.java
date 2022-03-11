@@ -4,9 +4,12 @@ import static com.mioai.gamehub.utils.Constants.RC_SIGN_IN;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -24,7 +28,6 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.mioai.gamehub.viewmodel.AuthViewModel;
 
@@ -32,9 +35,15 @@ public class LoginFragment extends Fragment
 {
     private TextView register;
 
-    private FirebaseAuth mAuth;
     private GoogleSignInClient mGoogleSignInClient;
     private AuthViewModel authViewModel;
+    private View loginFragmentView;
+
+    private EditText editTextEmail;
+    private EditText editTextPassword;
+    private Button buttonLogin;
+
+    private NavController navController;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -48,16 +57,72 @@ public class LoginFragment extends Fragment
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
     {
-        register = view.findViewById(R.id.register);
+        loginFragmentView = view;
+        register = loginFragmentView.findViewById(R.id.register);
+        editTextEmail = loginFragmentView.findViewById(R.id.login_email);
+        editTextPassword = loginFragmentView.findViewById(R.id.login_password);
+        buttonLogin = loginFragmentView.findViewById(R.id.login);
 
         initGoogleSignInButton();
         initAuthViewModel();
         initGoogleSignInClient();
 
+        navController = Navigation.findNavController(view);
+
         register.setOnClickListener(v ->
         {
-            Navigation.findNavController(v).navigate(R.id.registerUserFragment);
+            navController.navigate(R.id.registerUserFragment);
         });
+
+        buttonLogin.setOnClickListener(v ->
+        {
+            signInWithEmailAndPassword();
+        });
+    }
+
+    private void signInWithEmailAndPassword()
+    {
+        String email = editTextEmail.getText().toString().trim();
+        String password = editTextPassword.getText().toString().trim();
+
+        if (email.isEmpty())
+        {
+            editTextEmail.setError(getString(R.string.email_required));
+            editTextEmail.requestFocus();
+            return;
+        }
+
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches())
+        {
+            editTextEmail.setError(getString(R.string.email_invalid));
+            editTextEmail.requestFocus();
+            return;
+        }
+
+        if (password.isEmpty())
+        {
+            editTextPassword.setError(getString(R.string.password_required));
+            editTextPassword.requestFocus();
+            return;
+        }
+
+        if (password.length() < 6)
+        {
+            editTextPassword.setError(getString(R.string.password_too_short));
+            editTextPassword.requestFocus();
+            return;
+        }
+
+        authViewModel.signInWithEmailAndPassword(email, password);
+        authViewModel.getAuthenticatedUserLiveData().observe(this, authenticatedUser ->
+        {
+            if (!authenticatedUser.isNew())
+                goToHomeFragment(authenticatedUser);
+            else
+                Toast.makeText(getActivity(), getString(R.string.login_failed), Toast.LENGTH_SHORT).show();
+
+        });
+
     }
 
     private void initGoogleSignInClient()
@@ -80,14 +145,14 @@ public class LoginFragment extends Fragment
     {
 
         SignInButton signInGoogle = (SignInButton) getActivity().findViewById(R.id.sign_in_button);
-        signInGoogle.setOnClickListener(v -> signIn());
+        signInGoogle.setOnClickListener(v -> signInWithGoogle());
     }
 
     // TODO: 10.02.2022: Use ActivityResultLauncher instead
     //  (see: https://stackoverflow.com/questions/62671106/onactivityresult-method-is-deprecated-what-is-the-alternative)
 
     @SuppressWarnings("deprecation")
-    private void signIn()
+    private void signInWithGoogle()
     {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
@@ -112,7 +177,7 @@ public class LoginFragment extends Fragment
                     getGoogleAuthCredential(account);
             } catch (ApiException e)
             {
-                // Google Sign In failed, update UI appropriately
+                Toast.makeText(getActivity(), getString(R.string.googleSignInFailed), Toast.LENGTH_SHORT).show();
 
 
             }
@@ -136,14 +201,14 @@ public class LoginFragment extends Fragment
                 createNewUser(authenticatedUser);
             } else
             {
-                goToMainActivity(authenticatedUser);
+                goToHomeFragment(authenticatedUser);
             }
         });
     }
 
-    private void goToMainActivity(User user)
+    private void goToHomeFragment(User user)
     {
-        // TODO: 07.03.2022
+        Navigation.findNavController(loginFragmentView).navigate(R.id.action_loginFragment_to_firstFragment);
     }
 
     private void createNewUser(User authenticatedUser)
@@ -153,12 +218,8 @@ public class LoginFragment extends Fragment
         {
 
 
-            // TODO: 10.02.2022: Go to start screen
+            goToHomeFragment(user);
         });
     }
 
-    public void onRegister(View view)
-    {
-        Navigation.findNavController(view).navigate(R.id.registerUserFragment);
-    }
 }
