@@ -61,7 +61,7 @@
 
         <ImageView
             android:id="@+id/avNose"
-            android:src="@drawable/avatar_nose"
+            android:src="@drawable/avatar_nose_hang"
             android:layout_height="match_parent"
             android:layout_width="match_parent"
             >

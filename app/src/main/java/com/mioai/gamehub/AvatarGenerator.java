@@ -110,20 +110,20 @@ public class AvatarGenerator extends Fragment
             public void onItemSelected(AdapterView<?> adapterView, View view,
                                        int position, long id) {
                 String item = adapterView.getItemAtPosition(position).toString();
-                switch(item) {
-                    case ":P":
+                switch(position) {
+                    case 0:
                         mouth.setImageResource(R.drawable.avatar_mouths_p);
                         currentMouth=position;
                         break;
-                    case ":O":
+                    case 1:
                         mouth.setImageResource(R.drawable.avatar_mouths_o);
                         currentMouth=position;
                         break;
-                    case "Sad":
+                    case 2:
                         mouth.setImageResource(R.drawable.avatar_mouths_sad);
                         currentMouth=position;
                         break;
-                    case "Smile":
+                    case 3:
                         mouth.setImageResource(R.drawable.avatar_mouths_smile);
                         currentMouth=position;
                         break;
@@ -143,20 +143,20 @@ public class AvatarGenerator extends Fragment
             public void onItemSelected(AdapterView<?> adapterView, View view,
                                        int position, long id) {
                 String item = adapterView.getItemAtPosition(position).toString();
-                switch(item) {
-                    case "Alien":
+                switch(position) {
+                    case 0:
                         currentEyes=position;
                         eyes.setImageResource(R.drawable.avatar_eyes_alien);
                         break;
-                    case "Angry":
+                    case 1:
                         currentEyes=position;
                         eyes.setImageResource(R.drawable.avatar_eyes_angry);
                         break;
-                    case "Shocked":
+                    case 2:
                         currentEyes=position;
                         eyes.setImageResource(R.drawable.avatar_eyes_shocked);
                         break;
-                    case "Sly":
+                    case 3:
                         currentEyes=position;
                         eyes.setImageResource(R.drawable.avatar_eyes_sly);
                         break;
@@ -176,12 +176,12 @@ public class AvatarGenerator extends Fragment
             public void onItemSelected(AdapterView<?> adapterView, View view,
                                        int position, long id) {
                 String item = adapterView.getItemAtPosition(position).toString();
-                switch(item) {
-                    case "Realistic":
+                switch(position) {
+                    case 0:
                         currentBody=position;
                         background.setImageResource(R.drawable.avatar_body_real);
                         break;
-                    case "Round":
+                    case 1:
                         currentBody=position;
                         background.setImageResource(R.drawable.avatar_body_round);
                         break;
@@ -201,10 +201,18 @@ public class AvatarGenerator extends Fragment
             public void onItemSelected(AdapterView<?> adapterView, View view,
                                        int position, long id) {
                 String item = adapterView.getItemAtPosition(position).toString();
-                switch(item) {
-                    case "Nose":
+                switch(position) {
+                    case 0:
                         currentNose=position;
-                        nose.setImageResource(R.drawable.avatar_nose);
+                        nose.setImageResource(R.drawable.avatar_nose_left);
+                        break;
+                    case 1:
+                        currentNose=position;
+                        nose.setImageResource(R.drawable.avatar_nose_hang);
+                        break;
+                    case 2:
+                        currentNose=position;
+                        nose.setImageResource(R.drawable.avatar_nose_carrot);
                         break;
                 }
 
