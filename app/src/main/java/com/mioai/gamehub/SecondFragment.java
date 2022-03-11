@@ -23,6 +23,10 @@ public class SecondFragment extends Fragment
         view.findViewById(R.id.textView2).setOnClickListener((v) ->
                 Navigation.findNavController(v).navigate(R.id.navigateToAvatarFragment));
 
+        view.findViewById(R.id.textView4).setOnClickListener((v) ->
+                Navigation.findNavController(v).navigate(R.id.navigateToProfileFragment));
+
+
         return view;
     }
 }
