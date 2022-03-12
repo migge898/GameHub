@@ -46,6 +46,7 @@ public class FriendListFragment extends Fragment
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
     {
         recyclerView = view.findViewById(R.id.recyclerview_friendlist);
+        recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         mAuth = FirebaseAuth.getInstance();
@@ -59,7 +60,6 @@ public class FriendListFragment extends Fragment
     private void loadFriends(String s)
     {
         Query query = mRef.child(mUser.getUid()).orderByChild("username").startAt(s).endAt(s + "\uf8ff");
-        Toast.makeText(getActivity(), "UID: " + mUser.getUid(), Toast.LENGTH_SHORT).show();
         options = new FirebaseRecyclerOptions.Builder<User>().setQuery(query, User.class).build();
         adapter = new FirebaseRecyclerAdapter<User, UserViewHolder>(options)
         {
