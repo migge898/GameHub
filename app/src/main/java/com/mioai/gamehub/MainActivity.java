@@ -1,12 +1,6 @@
 package com.mioai.gamehub;
 
-import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -28,6 +22,7 @@ public class MainActivity extends AppCompatActivity implements FirebaseAuth.Auth
     private AppBarConfiguration appBarConfiguration;
     private NavController.OnDestinationChangedListener listener;
 
+
     private boolean doubleBackToExitPressedOnce = false;
 
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
@@ -42,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements FirebaseAuth.Auth
         NavigationView navigationView = findViewById(R.id.navigationView);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-        appBarConfiguration = new AppBarConfiguration.Builder(R.id.firstFragment, R.id.secondFragment)
+        appBarConfiguration = new AppBarConfiguration.Builder(R.id.firstFragment, R.id.friendListFragment)
                 .setOpenableLayout(drawerLayout)
                 .build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);

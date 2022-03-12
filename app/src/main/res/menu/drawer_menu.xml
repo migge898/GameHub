@@ -6,7 +6,7 @@
             android:id="@id/firstFragment"
             android:title="Home" />
         <item
-            android:id="@id/secondFragment"
+            android:id="@id/friendListFragment"
             android:title="SecondFragment" />
     </group>
 </menu>

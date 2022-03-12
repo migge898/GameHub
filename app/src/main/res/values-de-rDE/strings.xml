@@ -28,4 +28,8 @@
     <string name="username">Benutzername</string>
     <string name="accept">Bestätigen</string>
     <string name="googleSignInFailed">Google Login fehlgeschlagen!</string>
+    <string name="add_player">Hinzufügen</string>
+    <string name="insert_playername">Spielernamen eingeben</string>
+    <string name="show_profile">Zeige Profil</string>
+    <string name="delete_friend">Löschen</string>
 </resources>
