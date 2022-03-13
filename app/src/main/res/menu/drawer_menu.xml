@@ -3,19 +3,19 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@id/firstFragment"
+            android:id="@id/playFragment"
             android:title="Play"
             android:icon="@drawable/ic_play" />
         <item
-            android:id="@id/secondFragment"
+            android:id="@id/friendlistFragment"
             android:title="Friendlist"
             android:icon="@drawable/ic_friendlist"/>
         <item
-            android:id="@id/secondFragment"
+            android:id="@id/friendlistFragment"
             android:title="Settings"
             android:icon="@drawable/ic_settings"/>
         <item
-            android:id="@id/secondFragment"
+            android:id="@id/friendlistFragment"
             android:title="About"
             android:icon="@drawable/ic_about"/>
     </group>

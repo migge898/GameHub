@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 
-public class FirstScreen extends Fragment
+public class SingleplayerScreen extends Fragment
 {
 
     MyRecyclerViewAdapter recAdapter;
@@ -31,7 +31,7 @@ public class FirstScreen extends Fragment
         boolean includeEdge = true;
 
         //Init the view and adapter
-        View view = inflater.inflate(R.layout.fragment_first_screen, container, false);
+        View view = inflater.inflate(R.layout.fragment_singleplayer_screen, container, false);
         recyclerView = view.findViewById(R.id.rvIcons1);
         recyclerView.setLayoutManager(new GridLayoutManager(view.getContext(), spanCount));
         recAdapter = new MyRecyclerViewAdapter(view.getContext(), iconNames);

@@ -3,12 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".screens.FirstScreen">
+    tools:context=".MultiplayerScreen">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvIcons1"
+        android:id="@+id/rvIcons2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/teal_200"/>
+        android:background="@color/purple_200"/>
 
 </FrameLayout>

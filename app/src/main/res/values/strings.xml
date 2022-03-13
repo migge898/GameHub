@@ -6,4 +6,6 @@
     <string name="papier">papier</string>
     <string name="start">Start</string>
     <string name="close">Close</string>
+    <string name="fragment_play">Play</string>
+    <string name="fragment_friendlist">Friendlist</string>
 </resources>

@@ -4,6 +4,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.TableLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -21,7 +22,7 @@ import com.google.android.material.tabs.TabLayout;
 
 import java.util.Objects;
 
-public class MainActivity extends AppCompatActivity
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener
 {
     private NavController navController;
     private DrawerLayout drawerLayout;
@@ -46,13 +47,14 @@ public class MainActivity extends AppCompatActivity
         navController = Navigation.findNavController(this, R.id.fragment);
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.navigation_view);
+        navigationView.setNavigationItemSelectedListener(this);
         tabLayout = findViewById(R.id.tab_layout);
 //        navController = Navigation.findNavController(this, R.id.tab_layout);
         NavigationView navigationView = findViewById(R.id.navigationView);
         NavigationUI.setupWithNavController(navigationView, navController);
 
         //Add new Fragments here
-        appBarConfiguration = new AppBarConfiguration.Builder(R.id.firstFragment, R.id.secondFragment)
+        appBarConfiguration = new AppBarConfiguration.Builder(R.id.playFragment, R.id.friendlistFragment)
                 .setOpenableLayout(drawerLayout)
                 .build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
@@ -64,9 +66,9 @@ public class MainActivity extends AppCompatActivity
 
         listener = (controller, destination, arguments) ->
         {
-            if (destination.getId() == R.id.firstFragment)
+            if (destination.getId() == R.id.playFragment)
                 getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getColor(R.color.design_default_color_primary_dark)));
-            else if (destination.getId() == R.id.secondFragment)
+            else if (destination.getId() == R.id.friendlistFragment)
                 getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getColor(R.color.design_default_color_secondary)));
         };
     }
@@ -95,7 +97,10 @@ public class MainActivity extends AppCompatActivity
 
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.playFragment:
+                Toast.makeText(this, "This is play", Toast.LENGTH_SHORT).show();
+                break;
         }
-        return true;
+        return false;
     }
 }

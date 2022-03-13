@@ -12,12 +12,11 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
-import com.mioai.gamehub.FirstScreen;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class FirstFragment extends Fragment
+public class PlayFragment extends Fragment
 {
     DemoCollectionAdapter demoCollectionAdapter;
     ViewPager2 viewPager;
@@ -26,12 +25,12 @@ public class FirstFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
     {
-        View view = inflater.inflate(R.layout.fragment_first, container, false);
+        View view = inflater.inflate(R.layout.fragment_play, container, false);
 
         ArrayList<Fragment> fragments = new ArrayList<>(Arrays.asList(
-                new FirstScreen(),
-                new SecondScreen(),
-                new ThirdScreen()
+                new SingleplayerScreen(),
+                new MultiplayerScreen(),
+                new CoopScreen()
         ));
 
         demoCollectionAdapter = new DemoCollectionAdapter(
