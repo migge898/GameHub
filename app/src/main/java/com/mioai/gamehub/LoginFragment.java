@@ -114,7 +114,7 @@ public class LoginFragment extends Fragment
         }
 
         authViewModel.signInWithEmailAndPassword(email, password);
-        authViewModel.getAuthenticatedUserLiveData().observe(this, authenticatedUser ->
+        authViewModel.getAuthenticatedUserLiveData().observe(getViewLifecycleOwner(), authenticatedUser ->
         {
             if (!authenticatedUser.isNew())
                 goToHomeFragment(authenticatedUser);

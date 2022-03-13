@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/my_nav"
-    app:startDestination="@id/playFragment">
+    app:startDestination="@id/loginFragment">
 
     <fragment
         android:id="@+id/playFragment"
@@ -26,7 +26,7 @@
             app:destination="@id/playFragment"
             app:enterAnim="@android:anim/fade_in"
             app:exitAnim="@android:anim/fade_out" />
-            android:id="@+id/action_mainFragment_to_firstFragment"
+            android:id="@+id/action_mainFragment_to_playFragment"
             app:destination="@id/firstFragment"
             app:popUpTo="@id/my_nav"
             app:popUpToInclusive="true"/>
@@ -43,7 +43,7 @@
             app:destination="@id/registerUserFragment" />
         <action
             android:id="@+id/action_loginFragment_to_firstFragment"
-            app:destination="@id/firstFragment"
+            app:destination="@id/playFragment"
             app:popUpTo="@id/my_nav"
             app:popUpToInclusive="true" />
     </fragment>
@@ -53,7 +53,7 @@
         tools:layout="@layout/fragment_register_user">
         <action
             android:id="@+id/action_registerUserFragment_to_firstFragment"
-            app:destination="@id/firstFragment"
+            app:destination="@id/playFragment"
             app:popUpTo="@id/my_nav"
             app:popUpToInclusive="true" />
     </fragment>

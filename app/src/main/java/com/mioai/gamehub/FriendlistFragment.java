@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
-public class SecondFragment extends Fragment
+public class FriendlistFragment extends Fragment
 {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

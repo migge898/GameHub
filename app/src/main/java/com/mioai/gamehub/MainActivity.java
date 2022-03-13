@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         listener = (controller, destination, arguments) ->
         {
-            if (destination.getId() == R.id.mainFragment ||
+            if (destination.getId() == R.id.playFragment ||
                     destination.getId() == R.id.loginFragment ||
                     destination.getId() == R.id.registerUserFragment)
             {
@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             navController.navigate(R.id.loginFragment);
             Toast.makeText(this, getString(R.string.auth_failed), Toast.LENGTH_SHORT).show();
         } else
-            navController.navigate(R.id.action_mainFragment_to_firstFragment);
+            navController.navigate(R.id.action_mainFragment_to_loginFragment);
 
     }
 
