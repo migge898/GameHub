@@ -1,11 +1,18 @@
 package com.mioai.gamehub;
 
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Toast;
 import android.view.MenuItem;
 import android.widget.TableLayout;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,11 +25,13 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.Objects;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, FirebaseAuth.AuthStateListener
 {
     private NavController navController;
     private DrawerLayout drawerLayout;
@@ -30,6 +39,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private NavController.OnDestinationChangedListener listener;
 
+    private boolean doubleBackToExitPressedOnce = false;
+
+    FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private ActionBarDrawerToggle toggle;
     private NavigationView navigationView;
 
@@ -59,6 +71,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 .build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 
+        listener = (_c, destination, _b) ->
         toggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.start, R.string.close);
         drawerLayout.addDrawerListener(toggle);
         toggle.setDrawerIndicatorEnabled(true);
@@ -66,11 +79,39 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         listener = (controller, destination, arguments) ->
         {
+            if (destination.getId() == R.id.mainFragment ||
+                    destination.getId() == R.id.loginFragment ||
+                    destination.getId() == R.id.registerUserFragment)
+            {
+                drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+            } else
+                drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
             if (destination.getId() == R.id.playFragment)
                 getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getColor(R.color.design_default_color_primary_dark)));
             else if (destination.getId() == R.id.friendlistFragment)
                 getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getColor(R.color.design_default_color_secondary)));
         };
+
+    }
+
+    @Override
+    protected void onStart()
+    {
+        super.onStart();
+        firebaseAuth.addAuthStateListener(this);
+    }
+
+    @Override
+    public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth)
+    {
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+        if (firebaseUser == null)
+        {
+            navController.navigate(R.id.loginFragment);
+            Toast.makeText(this, getString(R.string.auth_failed), Toast.LENGTH_SHORT).show();
+        } else
+            navController.navigate(R.id.action_mainFragment_to_firstFragment);
+
     }
 
     @Override
