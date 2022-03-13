@@ -76,7 +76,11 @@ public class MainActivity extends AppCompatActivity implements FirebaseAuth.Auth
             navController.navigate(R.id.loginFragment);
             Toast.makeText(this, getString(R.string.auth_failed), Toast.LENGTH_SHORT).show();
         } else
+        {
+            navController.navigate(R.id.mainFragment);
             navController.navigate(R.id.action_mainFragment_to_firstFragment);
+        }
+
 
     }
 

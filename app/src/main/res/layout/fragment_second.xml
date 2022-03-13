@@ -7,17 +7,16 @@
     android:background="@color/design_default_color_secondary"
     tools:context=".SecondFragment">
 
-    <TextView
-        android:id="@+id/textView2"
+    <Button
+        android:id="@+id/btn_rock_paper_scissors"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="2"
-        android:textColor="#fff"
-        android:textSize="100sp"
+        android:layout_height="80dp"
+        android:text="Play RPS"
         android:textStyle="bold"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
@@ -18,5 +20,14 @@ public class SecondFragment extends Fragment
         View view = inflater.inflate(R.layout.fragment_second, container, false);
 
         return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
+    {
+        view.findViewById(R.id.btn_rock_paper_scissors).setOnClickListener(v ->
+        {
+            Navigation.findNavController(v).navigate(R.id.rockPaperScissorsFragment);
+        });
     }
 }

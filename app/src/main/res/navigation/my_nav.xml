@@ -14,6 +14,9 @@
             app:destination="@id/secondFragment"
             app:enterAnim="@android:anim/fade_in"
             app:exitAnim="@android:anim/fade_out" />
+        <action
+            android:id="@+id/action_firstFragment_to_rockPaperScissorsFragment"
+            app:destination="@id/rockPaperScissorsFragment" />
     </fragment>
     <fragment
         android:id="@+id/secondFragment"
@@ -55,5 +58,10 @@
             app:popUpTo="@id/my_nav"
             app:popUpToInclusive="true" />
     </fragment>
+    <fragment
+        android:id="@+id/rockPaperScissorsFragment"
+        android:name="com.mioai.gamehub.games.RockPaperScissorsFragment"
+        android:label="@string/rock_paper_scissors"
+        tools:layout="@layout/fragment_rock_paper_scissors" />
 
 </navigation>
