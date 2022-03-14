@@ -21,16 +21,14 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class MainActivity extends AppCompatActivity implements FirebaseAuth.AuthStateListener
+public class MainActivity extends AppCompatActivity
 {
     private NavController navController;
     private DrawerLayout drawerLayout;
     private AppBarConfiguration appBarConfiguration;
     private NavController.OnDestinationChangedListener listener;
 
-    private boolean doubleBackToExitPressedOnce = false;
 
-    FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -60,25 +58,6 @@ public class MainActivity extends AppCompatActivity implements FirebaseAuth.Auth
 
     }
 
-    @Override
-    protected void onStart()
-    {
-        super.onStart();
-        firebaseAuth.addAuthStateListener(this);
-    }
-
-    @Override
-    public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth)
-    {
-        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-        if (firebaseUser == null)
-        {
-            navController.navigate(R.id.loginFragment);
-            Toast.makeText(this, getString(R.string.auth_failed), Toast.LENGTH_SHORT).show();
-        } else
-            navController.navigate(R.id.action_mainFragment_to_firstFragment);
-
-    }
 
     @Override
     protected void onResume()
