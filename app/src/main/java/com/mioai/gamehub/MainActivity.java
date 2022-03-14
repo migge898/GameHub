@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView = findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(this);
         tabLayout = findViewById(R.id.tab_layout);
-//        navController = Navigation.findNavController(this, R.id.tab_layout);
+        navController = Navigation.findNavController(this, R.id.tab_layout);
         NavigationView navigationView = findViewById(R.id.navigationView);
         NavigationUI.setupWithNavController(navigationView, navController);
 
@@ -71,7 +71,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 .build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 
-        listener = (_c, destination, _b) ->
         toggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.start, R.string.close);
         drawerLayout.addDrawerListener(toggle);
         toggle.setDrawerIndicatorEnabled(true);

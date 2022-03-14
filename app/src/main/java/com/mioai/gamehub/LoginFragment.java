@@ -144,7 +144,7 @@ public class LoginFragment extends Fragment
     private void initGoogleSignInButton()
     {
 
-        SignInButton signInGoogle = (SignInButton) getActivity().findViewById(R.id.sign_in_button);
+        SignInButton signInGoogle = getActivity().findViewById(R.id.sign_in_button);
         signInGoogle.setOnClickListener(v -> signInWithGoogle());
     }
 
