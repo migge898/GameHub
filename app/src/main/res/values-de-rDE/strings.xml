@@ -30,4 +30,6 @@
     <string name="paper">Papier</string>
     <string name="scissors">Schere</string>
     <string name="rock_paper_scissors">Schere Stein Papier</string>
+    <string name="game_won">Spiel gewonnen!</string>
+    <string name="game_lost">Spiel verloren!</string>
 </resources>

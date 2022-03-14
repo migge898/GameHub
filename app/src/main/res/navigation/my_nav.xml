@@ -8,6 +8,7 @@
     <fragment
         android:id="@+id/firstFragment"
         android:name="com.mioai.gamehub.FirstFragment"
+        android:label="Home"
         tools:layout="@layout/fragment_first">
         <action
             android:id="@+id/navigateToSecondFragment"
@@ -25,12 +26,13 @@
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.mioai.gamehub.MainFragment"
+        android:label="Welcome"
         tools:layout="@layout/fragment_main">
         <action
             android:id="@+id/action_mainFragment_to_firstFragment"
             app:destination="@id/firstFragment"
             app:popUpTo="@id/my_nav"
-            app:popUpToInclusive="true"/>
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_mainFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
@@ -38,6 +40,7 @@
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.mioai.gamehub.LoginFragment"
+        android:label="Login"
         tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_loginFragment_to_registerUserFragment"
@@ -51,6 +54,7 @@
     <fragment
         android:id="@+id/registerUserFragment"
         android:name="com.mioai.gamehub.RegisterUserFragment"
+        android:label="Registration"
         tools:layout="@layout/fragment_register_user">
         <action
             android:id="@+id/action_registerUserFragment_to_firstFragment"

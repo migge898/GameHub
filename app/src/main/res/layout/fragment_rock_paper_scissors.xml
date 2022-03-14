@@ -12,7 +12,8 @@
         android:id="@+id/scoreboard"
         layout="@layout/layout_scoreboard"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardEnemyWeapon"
@@ -50,6 +51,7 @@
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
+
     <LinearLayout
         android:id="@+id/linear_weapon"
         android:layout_width="wrap_content"
@@ -61,122 +63,15 @@
         app:layout_constraintTop_toBottomOf="@id/scoreboard"
         app:layout_constraintVertical_bias="0.3">
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:clickable="true"
-            android:foreground="?android:attr/selectableItemBackground"
-            app:cardBackgroundColor="@android:color/holo_green_light"
-            app:cardCornerRadius="10dp"
-            app:cardElevation="10dp">
 
-            <LinearLayout
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:gravity="center_horizontal"
-                android:orientation="vertical">
+        <include layout="@layout/cardview_paper" />
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:layout_marginTop="5dp"
-                    android:src="@drawable/paper" />
+        <include layout="@layout/cardview_rock" />
 
-                <TextView
-                    android:id="@+id/textview_paper"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/paper"
-                    android:textAllCaps="true"
-                    android:textSize="18sp" />
-
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:clickable="true"
-            android:foreground="?android:attr/selectableItemBackground"
-            app:cardBackgroundColor="@android:color/holo_green_light"
-            app:cardCornerRadius="10dp"
-            app:cardElevation="10dp">
-
-            <LinearLayout
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:gravity="center_horizontal"
-                android:orientation="vertical">
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:layout_marginTop="5dp"
-                    android:src="@drawable/rock" />
-
-                <TextView
-                    android:id="@+id/textview_rock"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/rock"
-                    android:textAllCaps="true"
-                    android:textSize="18sp" />
-
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:clickable="true"
-            android:foreground="?android:attr/selectableItemBackground"
-            app:cardBackgroundColor="@android:color/holo_green_light"
-            app:cardCornerRadius="10dp"
-            app:cardElevation="10dp">
-
-            <LinearLayout
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:gravity="center_horizontal"
-                android:orientation="vertical">
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:layout_marginTop="5dp"
-                    android:src="@drawable/scissors" />
-
-                <TextView
-                    android:id="@+id/textview_scissors"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/scissors"
-                    android:textAllCaps="true"
-                    android:textSize="18sp" />
-
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-
+        <include layout="@layout/cardview_scissors" />
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/btnLockWeapon"
-        android:layout_width="wrap_content"
-        android:layout_height="70dp"
-        android:layout_marginTop="20dp"
-        android:backgroundTint="#0ED6B9"
-        android:text="Lock"
-        android:textSize="26sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="@id/linear_weapon"
-        app:layout_constraintRight_toRightOf="@id/linear_weapon"
-        app:layout_constraintTop_toBottomOf="@id/linear_weapon"
-        app:layout_constraintVertical_bias="0.1" />
 
     <TextView
         android:id="@+id/textViewStatus"
@@ -186,10 +81,10 @@
         android:textAllCaps="true"
         android:textSize="26sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@id/btnLockWeapon"
-        app:layout_constraintLeft_toRightOf="@id/btnLockWeapon"
+        app:layout_constraintBottom_toBottomOf="@id/linear_weapon"
+        app:layout_constraintLeft_toRightOf="@id/linear_weapon"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/btnLockWeapon" />
+        app:layout_constraintTop_toBottomOf="@id/cardEnemyWeapon" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

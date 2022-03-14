@@ -5,23 +5,50 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
-import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
+import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.mioai.gamehub.R;
+import com.mioai.gamehub.viewmodel.games.RockPaperScissorsViewModel;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class RockPaperScissorsFragment extends Fragment
 {
 
     private LinearLayout linearLayoutWeapons;
-    private CardView cardViewScissors;
+    private CardView cardViewPaper, cardViewRock, cardViewScissors;
+    private CardView cardViewEnemyWeapon;
+
+    private TextView textViewPlayerName, textViewEnemyName;
+    private TextView textViewPlayerScore, textViewEnemyScore;
+    private TextView textViewStatus;
+
+    private List<CardView> weapons;
+
+    private boolean weaponLocked;
+    private boolean weaponSelected;
+
+    private int selectedWeaponPosition = -1;
+
+    // Careful: Positions hardcoded to wepons-List!
+    private static final int PAPER = 0;
+    private static final int ROCK = 1;
+    private static final int SCISSORS = 2;
+
+    private RockPaperScissorsViewModel gameViewModel;
+
+    String playerUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -34,6 +61,128 @@ public class RockPaperScissorsFragment extends Fragment
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
     {
-        linearLayoutWeapons = view.findViewById(R.id.linear_weapon);
+        initLayout(view);
+        initGameViewModel();
+        gameViewModel.createOrJoinMatch();
+        updateUI();
     }
+
+    private void updateUI()
+    {
+        gameViewModel.getRockPaperScissorsMatch().observe(this, match ->
+        {
+            if (match.isCreated)
+            {
+                textViewPlayerName.setText(match.name_player1);
+                textViewPlayerScore.setText(String.valueOf(match.score_player1));
+                textViewEnemyName.setText(match.name_player2);
+                textViewEnemyScore.setText(String.valueOf(match.score_player2));
+            } else
+            {
+                textViewPlayerName.setText(match.name_player2);
+                textViewPlayerScore.setText(String.valueOf(match.score_player2));
+                textViewEnemyName.setText(match.name_player1);
+                textViewEnemyScore.setText(String.valueOf(match.score_player1));
+            }
+            updateStatus(match);
+
+        });
+    }
+
+    private void updateStatus(RockPaperScissorMatch rpsGame)
+    {
+        boolean isPlayer1 = playerUid.equals(rpsGame.id_player1);
+        int status = rpsGame.status;
+        String statusText = "";
+
+        if (isPlayer1)
+        {
+            switch (status)
+            {
+                case 0:
+                    statusText = getString(R.string.tie);
+                    break;
+                case 1:
+                    statusText = getString(R.string.won);
+                    break;
+                case 2:
+                    statusText = getString(R.string.lost);
+                    break;
+                case 11:
+                    statusText = getString(R.string.game_won);
+                    break;
+                case 22:
+                    statusText = getString(R.string.game_lost);
+                    break;
+                default:
+                    statusText = getString(R.string.waiting);
+                    break;
+            }
+
+        } else
+        {
+            switch (status)
+            {
+                case 0:
+                    statusText = getString(R.string.tie);
+                    break;
+                case 1:
+                    statusText = getString(R.string.lost);
+                    break;
+                case 2:
+                    statusText = getString(R.string.won);
+                    break;
+                case 11:
+                    statusText = getString(R.string.game_lost);
+                    break;
+                case 22:
+                    statusText = getString(R.string.game_won);
+                    break;
+                default:
+                    statusText = getString(R.string.waiting);
+                    break;
+            }
+
+        }
+
+        textViewStatus.setText(statusText);
+    }
+
+    private void initLayout(View view)
+    {
+        // Scoreboard
+        textViewPlayerName = view.findViewById(R.id.textviewPlayerName);
+        textViewEnemyName = view.findViewById(R.id.textviewEnemyName);
+        textViewPlayerScore = view.findViewById(R.id.textviewPlayerScore);
+        textViewEnemyScore = view.findViewById(R.id.textviewEnemyScore);
+
+        linearLayoutWeapons = view.findViewById(R.id.linear_weapon);
+        cardViewPaper = view.findViewById(R.id.cardPaper);
+        cardViewRock = view.findViewById(R.id.cardRock);
+        cardViewScissors = view.findViewById(R.id.cardScissors);
+        cardViewEnemyWeapon = view.findViewById(R.id.cardEnemyWeapon);
+
+        textViewStatus = view.findViewById(R.id.textViewStatus);
+
+        weapons = Arrays.asList(cardViewPaper, cardViewRock, cardViewScissors);
+
+        weapons.forEach(w ->
+        {
+            w.setOnClickListener(v ->
+            {
+                w.setCardBackgroundColor(ContextCompat.getColor(getActivity(), R.color.secondaryColor));
+
+                selectedWeaponPosition = weapons.indexOf(w);
+
+                weapons.forEach(ww -> ww.setEnabled(false));
+            });
+        });
+
+    }
+
+    private void initGameViewModel()
+    {
+        gameViewModel = new ViewModelProvider(this).get(RockPaperScissorsViewModel.class);
+    }
+
 }
