@@ -4,23 +4,30 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@id/firstFragment"
-            android:title="Play"
-            android:icon="@drawable/ic_play" />
+            android:icon="@drawable/ic_play"
+            android:title="Play" />
         <item
             android:id="@id/secondFragment"
-            android:title="Friendlist"
-            android:icon="@drawable/ic_friendlist"/>
+            android:icon="@drawable/ic_friendlist"
+            android:title="Friendlist" />
         <item
             android:id="@id/secondFragment"
-            android:title="Settings"
-            android:icon="@drawable/ic_settings"/>
+            android:icon="@drawable/ic_settings"
+            android:title="Settings" />
         <item
             android:id="@id/secondFragment"
-            android:title="About"
-            android:icon="@drawable/ic_about"/>
-        <item
-            android:id="@id/secondFragment"
-            android:title="Log out"
-            android:icon="@drawable/ic_logout"/>
+            android:icon="@drawable/ic_about"
+            android:title="About" />
+
     </group>
+    <item android:title="">
+        <menu>
+            <item
+                android:id="@+id/mainFragment"
+                android:title="Log out"
+                android:icon="@drawable/ic_logout">
+
+            </item>
+        </menu>
+    </item>
 </menu>
