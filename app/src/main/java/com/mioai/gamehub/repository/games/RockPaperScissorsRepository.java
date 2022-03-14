@@ -81,72 +81,76 @@ public class RockPaperScissorsRepository
 
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
 
-        // Init game values
-        match.id_player1 = firebaseUser.getUid();
-        match.isCreated = true;
-
-        // Get player name
-
-        match.name_player1 = firebaseUser.getDisplayName();
-//        usersRef.child(playerUID).child("username").addValueEventListener(new ValueEventListener()
-//        {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot)
-//            {
-//                match.name_player1 = snapshot.getValue(String.class);
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error)
-//            {
-//                logErrorMessage(this, error.getMessage());
-//            }
-//        });
-
-        String matchID = UIDGenerator.randomUID();
-
-        // Add match ID in waiting list to indicate players can join
-        waitingRef.child(ROCK_PAPER_SCISSORS_ID).child(matchID).setValue(true);
-
-        matchesRef.child(ROCK_PAPER_SCISSORS_ID).child(matchID).setValue(match).addOnCompleteListener(task ->
+        if (firebaseUser != null)
         {
-            if (task.isSuccessful())
+            // Init game values
+            match.id_player1 = firebaseUser.getUid();
+            match.isCreated = true;
+
+            // Get player name
+
+            match.name_player1 = firebaseUser.getDisplayName();
+
+            String matchID = UIDGenerator.randomUID();
+
+            // Add match ID in waiting list to indicate players can join
+            waitingRef.child(ROCK_PAPER_SCISSORS_ID).child(matchID).setValue(true);
+
+            matchesRef.child(ROCK_PAPER_SCISSORS_ID).child(matchID).setValue(match).addOnCompleteListener(task ->
             {
-                rpsGameMutableLiveData.setValue(match);
-            } else
-                logErrorMessage(this, task);
-        });
+                if (task.isSuccessful())
+                {
+                    rpsGameMutableLiveData.setValue(match);
+                } else
+                    logErrorMessage(this, task);
+            });
+        } else
+            logErrorMessage(this, "createMatch(): firebase user is null");
+
 
     }
 
     private void joinMatch(String matchID)
     {
         FirebaseUser user = firebaseAuth.getCurrentUser();
-        String username = user.getDisplayName();
-        String uid = user.getUid();
-        DatabaseReference matchRef = matchesRef.child(ROCK_PAPER_SCISSORS_ID).child(matchID);
-
-        Map<String, Object> matchUpdates = new HashMap<>();
-        matchUpdates.put("id_player2", uid);
-        matchUpdates.put("name_player2", username);
-
-        matchRef.updateChildren(matchUpdates).addOnCompleteListener(task ->
+        if (user != null)
         {
-            if (task.isSuccessful())
-            {
-                matchRef.get().addOnCompleteListener(joinTask ->
-                {
-                    if (joinTask.isSuccessful())
-                    {
-                        DataSnapshot data = joinTask.getResult();
-                        RockPaperScissorMatch rpsMatch = data.getValue(RockPaperScissorMatch.class);
-                        rpsMatch.isCreated = false;
-                        rpsGameMutableLiveData.setValue(rpsMatch);
-                    }
+            String username = user.getDisplayName();
+            String uid = user.getUid();
+            DatabaseReference matchRef = matchesRef.child(ROCK_PAPER_SCISSORS_ID).child(matchID);
 
-                });
-            } else
-                logErrorMessage(this, task);
-        });
+            Map<String, Object> matchUpdates = new HashMap<>();
+            matchUpdates.put("id_player2", uid);
+            matchUpdates.put("name_player2", username);
+
+            matchRef.updateChildren(matchUpdates).addOnCompleteListener(task ->
+            {
+                if (task.isSuccessful())
+                {
+                    matchRef.get().addOnCompleteListener(joinTask ->
+                    {
+                        if (joinTask.isSuccessful())
+                        {
+                            DataSnapshot data = joinTask.getResult();
+                            RockPaperScissorMatch rpsMatch = data.getValue(RockPaperScissorMatch.class);
+                            if (rpsMatch != null)
+                            {
+                                rpsMatch.isCreated = false;
+                                rpsGameMutableLiveData.setValue(rpsMatch);
+
+                                // Delete entry in waiting reference
+                                waitingRef.child(ROCK_PAPER_SCISSORS_ID).child(matchID).removeValue();
+                            } else
+                                logErrorMessage(this, "RPS-Match is null");
+
+                        }
+
+                    });
+                } else
+                    logErrorMessage(this, task);
+            });
+        } else
+            logErrorMessage(this, "Firebase user is null");
+
     }
 }
