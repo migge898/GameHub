@@ -3,23 +3,23 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@id/friendlistFragment"
+            android:id="@id/firstFragment"
             android:title="Play"
             android:icon="@drawable/ic_play" />
         <item
-            android:id="@id/friendlistFragment"
+            android:id="@id/secondFragment"
             android:title="Friendlist"
             android:icon="@drawable/ic_friendlist"/>
         <item
-            android:id="@id/friendlistFragment"
+            android:id="@id/secondFragment"
             android:title="Settings"
             android:icon="@drawable/ic_settings"/>
         <item
-            android:id="@id/friendlistFragment"
+            android:id="@id/secondFragment"
             android:title="About"
             android:icon="@drawable/ic_about"/>
         <item
-            android:id="@id/"
+            android:id="@id/secondFragment"
             android:title="Log out"
             android:icon="@drawable/ic_logout"/>
     </group>
