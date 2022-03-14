@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(toolbar);
         navController = Navigation.findNavController(this, R.id.fragment);
         drawerLayout = findViewById(R.id.drawer_layout);
-        navigationView = findViewById(R.id.navigation_view);
+        navigationView = findViewById(R.id.navigationView);
         navigationView.setNavigationItemSelectedListener(this);
         tabLayout = findViewById(R.id.tab_layout);
         navController = Navigation.findNavController(this, R.id.tab_layout);
