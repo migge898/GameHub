@@ -4,11 +4,11 @@ import com.google.firebase.database.Exclude;
 
 public class RockPaperScissorMatch extends BaseMatch
 {
-    public String id_player1;
-    public String id_player2;
+    public String id_player1 = "";
+    public String id_player2 = "";
 
-    public String name_player1;
-    public String name_player2;
+    public String name_player1 = "";
+    public String name_player2 = "";
 
     public int score_player1;
     public int score_player2;
