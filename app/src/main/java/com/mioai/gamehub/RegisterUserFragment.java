@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class RegisterUserFragment extends Fragment
@@ -67,10 +68,10 @@ public class RegisterUserFragment extends Fragment
     {
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
-        String fullName = editTextFullName.getText().toString().trim();
+        String username = editTextFullName.getText().toString().trim();
         String age = editTextAge.getText().toString().trim();
 
-        if (fullName.isEmpty())
+        if (username.isEmpty())
         {
             editTextFullName.setError(getString(R.string.fullname_required));
             editTextFullName.requestFocus();
@@ -116,15 +117,19 @@ public class RegisterUserFragment extends Fragment
 
 
         progressBar.setVisibility(View.VISIBLE);
+
+
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task ->
         {
             if (task.isSuccessful())
             {
                 FirebaseUser firebaseUser = mAuth.getCurrentUser();
+
                 User user = new User(
                         firebaseUser.getUid(),
-                        firebaseUser.getDisplayName(),
-                        firebaseUser.getEmail());
+                        username,
+                        email,
+                        age);
 
                 FirebaseDatabase.getInstance("https://gamehub-4786a-default-rtdb.europe-west1.firebasedatabase.app/")
                         .getReference("Users")
