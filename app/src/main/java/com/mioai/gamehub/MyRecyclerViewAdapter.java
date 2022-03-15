@@ -4,21 +4,24 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder> {
-
+    private int[] icons;
     private String[] mData;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
 
+
     // data is passed into the constructor
-    MyRecyclerViewAdapter(Context context, String[] data) {
+    MyRecyclerViewAdapter(Context context, String[] names, int[] icons) {
         this.mInflater = LayoutInflater.from(context);
-        this.mData = data;
+        this.mData = names;
+        this.icons = icons;
     }
 
     // inflates the cell layout from xml when needed
@@ -31,6 +34,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     // binds the data to the TextView in each cell
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.myTextView.setText(mData[position]);
+        holder.imageView.setImageResource(icons[position]);
     }
 
     // total number of cells
@@ -43,10 +47,12 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView myTextView;
+        ImageView imageView;
 
         ViewHolder(View itemView) {
             super(itemView);
             myTextView = itemView.findViewById(R.id.iconNames);
+            imageView = itemView.findViewById(R.id.gameIcon);
             itemView.setOnClickListener(this);
         }
 
