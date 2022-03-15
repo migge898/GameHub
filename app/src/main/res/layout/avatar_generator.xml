@@ -1,118 +1,155 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_height="match_parent"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical">
 
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_height="314dp"
-    android:layout_width="352dp"
-    android:layout_centerHorizontal="true"
-    android:id="@+id/FLavatar"
-    >
 
-
-    <RelativeLayout
+    <ImageView
+        android:id="@+id/avBody"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        >
-        <ImageView
-            android:id="@+id/avBody"
-            android:src="@drawable/avatar_body_real"
-            android:layout_height="match_parent"
-            android:layout_width="match_parent"
-            >
-        </ImageView>
-    </RelativeLayout>
+        android:src="@drawable/avatar_body_real"
+        app:layout_constraintStart_toStartOf="@+id/guideline8"
+        app:layout_constraintTop_toTopOf="@+id/guideline9">
 
-    <RelativeLayout
+    </ImageView>
+
+
+    <ImageView
+        android:id="@+id/avEyes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        >
-        <ImageView
-            android:id="@+id/avEyes"
-            android:src="@drawable/avatar_eyes_angry"
-            android:layout_height="match_parent"
-            android:layout_width="match_parent"
-            >
-        </ImageView>
-    </RelativeLayout>
+        android:src="@drawable/avatar_eyes_angry"
+        app:layout_constraintStart_toStartOf="@+id/avBody"
+        app:layout_constraintTop_toTopOf="@+id/avBody">
 
-    <RelativeLayout
+    </ImageView>
+
+
+    <ImageView
+        android:id="@+id/avMouth"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        >
-        <ImageView
-            android:id="@+id/avMouth"
-            android:src="@drawable/avatar_mouths_sad"
-            android:layout_height="match_parent"
-            android:layout_width="match_parent"
-            >
-        </ImageView>
-    </RelativeLayout>
+        android:src="@drawable/avatar_mouths_sad"
+        app:layout_constraintStart_toStartOf="@+id/avBody">
 
-    <RelativeLayout
+    </ImageView>
+
+
+    <ImageView
+        android:id="@+id/avNose"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        >
+        android:src="@drawable/avatar_nose_hang"
+        app:layout_constraintStart_toStartOf="@+id/avBody">
 
-        <ImageView
-            android:id="@+id/avNose"
-            android:src="@drawable/avatar_nose_hang"
-            android:layout_height="match_parent"
-            android:layout_width="match_parent"
-            >
-        </ImageView>
-    </RelativeLayout>
+    </ImageView>
 
-</FrameLayout>
 
     <Spinner
-        android:layout_below="@id/FLavatar"
         android:id="@+id/spinnerEyes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        >
+        android:layout_width="150dp"
+        android:layout_height="48dp"
+        app:layout_constraintStart_toStartOf="@+id/guideline7"
+        app:layout_constraintTop_toTopOf="@+id/guideline2">
+
     </Spinner>
 
     <Spinner
-        android:layout_below="@id/spinnerEyes"
         android:id="@+id/spinnerMouths"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        >
+        android:layout_width="150dp"
+        android:layout_height="48dp"
+        app:layout_constraintStart_toStartOf="@+id/guideline7"
+        app:layout_constraintTop_toTopOf="@+id/guideline3">
+
     </Spinner>
 
     <Spinner
-        android:layout_below="@id/spinnerMouths"
         android:id="@+id/spinnerBody"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        >
+        android:layout_width="150dp"
+        android:layout_height="48dp"
+        app:layout_constraintStart_toStartOf="@+id/guideline7"
+        app:layout_constraintTop_toTopOf="@+id/guideline4">
+
     </Spinner>
 
     <Spinner
-        android:layout_below="@id/spinnerBody"
         android:id="@+id/spinnerNoses"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        >
+        android:layout_width="150dp"
+        android:layout_height="48dp"
+        app:layout_constraintStart_toStartOf="@+id/guideline7"
+        app:layout_constraintTop_toTopOf="@+id/guideline5">
+
     </Spinner>
 
     <Button
         android:id="@+id/save_Avatar"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/spinnerNoses"
+        android:layout_width="150dp"
+        android:layout_height="48dp"
+        android:text="Save"
+        app:layout_constraintBottom_toTopOf="@+id/guideline6"
+        app:layout_constraintStart_toStartOf="@+id/guideline7" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Save" />
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="390dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="450dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="570dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="510dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="690dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="128dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="49dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="20dp" />
 
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
