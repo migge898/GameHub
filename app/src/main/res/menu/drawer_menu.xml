@@ -11,11 +11,11 @@
             android:icon="@drawable/ic_friendlist"
             android:title="Friendlist" />
         <item
-            android:id="@id/secondFragment"
+            android:id="@id/settingsFragment"
             android:icon="@drawable/ic_settings"
             android:title="Settings" />
         <item
-            android:id="@id/secondFragment"
+            android:id="@id/aboutFragment"
             android:icon="@drawable/ic_about"
             android:title="About" />
 
