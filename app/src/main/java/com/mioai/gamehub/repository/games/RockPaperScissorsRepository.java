@@ -38,6 +38,18 @@ public class RockPaperScissorsRepository
     private final DatabaseReference matchesRef = database.getReference(MATCHES);
     private final DatabaseReference waitingRef = database.getReference(WAITING);
 
+    private boolean userHasCreatedMatch = false;
+
+    private int weaponPlayer1;
+    private int weaponPlayer2;
+
+    private int previousStatus = -1;
+
+    // Careful: Positions hardcoded to wepons-List!
+    private static final int PAPER = 0;
+    private static final int ROCK = 1;
+    private static final int SCISSORS = 2;
+
     private String openMatchID = "";
 
     public MutableLiveData<Boolean> matchWillBeCreated()
@@ -51,8 +63,10 @@ public class RockPaperScissorsRepository
 
 
                 if (!openMatch.exists())
+                {
                     openMatchID = UIDGenerator.randomUID();
-                else
+                    userHasCreatedMatch = true;
+                } else
                     // Get the matchID of the first available match in waiting list
                     openMatchID = openMatch.getChildren().iterator().next().getKey();
 
@@ -102,6 +116,7 @@ public class RockPaperScissorsRepository
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot)
                         {
+                            updateStatus();
                             createdMatchMutableLiveData.setValue(snapshot.getValue(RockPaperScissorsMatch.class));
                         }
 
@@ -146,6 +161,7 @@ public class RockPaperScissorsRepository
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot)
                         {
+                            updateStatus();
                             joinedMatchMutableLiveData.setValue(snapshot.getValue(RockPaperScissorsMatch.class));
 
                             // Delete entry in waiting reference
@@ -167,9 +183,59 @@ public class RockPaperScissorsRepository
         return joinedMatchMutableLiveData;
     }
 
-    public MutableLiveData<RockPaperScissorsMatch> playCard(int selectedWeapon)
+    private void updateStatus()
     {
-        // TODO: 15.03.2022
-        return null;
+        DatabaseReference matchRef = matchesRef.child(ROCK_PAPER_SCISSORS_ID).child(openMatchID);
+        int status = -1;
+        boolean player1PlayedCard = weaponPlayer1 != -1;
+        boolean player2PlayedCard = weaponPlayer2 != -1;
+        if (player1PlayedCard && player2PlayedCard)
+            status = fight();
+
+        if (status != previousStatus)
+        {
+            Map<String, Object> matchUpdates = new HashMap<>();
+            matchUpdates.put("status", status);
+            matchRef.updateChildren(matchUpdates);
+            previousStatus = status;
+        }
+
+
+    }
+
+    private int fight()
+    {
+        int status = -1;
+
+        if (weaponPlayer1 == weaponPlayer2)
+            status = 0;
+        else if (weaponPlayer1 == ROCK)
+            status = (weaponPlayer2 == SCISSORS) ? 1 : 2;
+        else if (weaponPlayer1 == PAPER)
+            status = (weaponPlayer2 == ROCK) ? 1 : 2;
+        else
+            status = (weaponPlayer2 == PAPER) ? 1 : 2;
+
+        return status;
+
+    }
+
+    public void playCard(int selectedWeapon)
+    {
+        DatabaseReference matchRef = matchesRef.child(ROCK_PAPER_SCISSORS_ID).child(openMatchID);
+
+        Map<String, Object> matchUpdates = new HashMap<>();
+
+        if (userHasCreatedMatch)
+        {
+            matchUpdates.put("weapon_player1", selectedWeapon);
+            weaponPlayer1 = selectedWeapon;
+        } else
+        {
+            matchUpdates.put("weapon_player2", selectedWeapon);
+            weaponPlayer2 = selectedWeapon;
+        }
+
+        matchRef.updateChildren(matchUpdates);
     }
 }

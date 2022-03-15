@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -88,6 +89,15 @@ public class RockPaperScissorsFragment extends Fragment
             textViewEnemyName.setText(joinedMatch.name_player1);
             textViewEnemyScore.setText(String.valueOf(joinedMatch.score_player1));
 
+            if (joinedMatch.weapon_player1 != -1)
+            {
+                Toast.makeText(getActivity(), "Enemy played "+ joinedMatch.weapon_player1, Toast.LENGTH_SHORT).show();
+            }
+            if (joinedMatch.weapon_player2 != -1)
+            {
+                Toast.makeText(getActivity(), "You played "+ joinedMatch.weapon_player2, Toast.LENGTH_SHORT).show();
+            }
+
             updateStatus(joinedMatch);
         });
     }
@@ -101,6 +111,16 @@ public class RockPaperScissorsFragment extends Fragment
             textViewPlayerScore.setText(String.valueOf(createdMatch.score_player1));
             textViewEnemyName.setText(createdMatch.name_player2);
             textViewEnemyScore.setText(String.valueOf(createdMatch.score_player2));
+
+            if (createdMatch.weapon_player1 != -1)
+            {
+                Toast.makeText(getActivity(), "You played "+ createdMatch.weapon_player1, Toast.LENGTH_SHORT).show();
+            }
+            if (createdMatch.weapon_player2 != -1)
+            {
+                Toast.makeText(getActivity(), "Enemy played "+ createdMatch.weapon_player2, Toast.LENGTH_SHORT).show();
+            }
+
 
             updateStatus(createdMatch);
         });

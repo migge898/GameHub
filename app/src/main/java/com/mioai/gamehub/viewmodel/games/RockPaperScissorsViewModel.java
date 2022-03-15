@@ -55,7 +55,6 @@ public class RockPaperScissorsViewModel extends AndroidViewModel
 
     public void playCard(int selectedWeapon)
     {
-        createdMatchLiveData = rpsRepository.playCard(selectedWeapon);
-        joinedMatchLiveData = rpsRepository.playCard(selectedWeapon);
+        rpsRepository.playCard(selectedWeapon);
     }
 }

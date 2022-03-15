@@ -11,8 +11,8 @@ public class RockPaperScissorsMatch extends BaseMatch
     public int score_player1;
     public int score_player2;
 
-    public int weapon_player1;
-    public int weapon_player2;
+    public int weapon_player1 = -1;
+    public int weapon_player2 = -1;
 
     /**
      * -1: No match
