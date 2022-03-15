@@ -4,9 +4,30 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@id/firstFragment"
-            android:title="Home" />
+            android:icon="@drawable/ic_play"
+            android:title="Play" />
         <item
-            android:id="@id/secondFragment"
-            android:title="SecondFragment" />
+            android:id="@id/friendListFragment"
+            android:icon="@drawable/ic_friendlist"
+            android:title="Friend List" />
+        <item
+            android:id="@id/settingsFragment"
+            android:icon="@drawable/ic_settings"
+            android:title="Settings" />
+        <item
+            android:id="@id/aboutFragment"
+            android:icon="@drawable/ic_about"
+            android:title="About" />
+
     </group>
+    <item android:title="">
+        <menu>
+            <item
+                android:id="@+id/mainFragment"
+                android:title="Log out"
+                android:icon="@drawable/ic_logout">
+
+            </item>
+        </menu>
+    </item>
 </menu>
