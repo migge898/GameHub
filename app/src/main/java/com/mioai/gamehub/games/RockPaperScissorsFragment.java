@@ -45,7 +45,7 @@ public class RockPaperScissorsFragment extends Fragment
     private static final int ROCK = 1;
     private static final int SCISSORS = 2;
 
-    private RockPaperScissorsViewModel gameViewModel;
+    private RockPaperScissorsViewModel matchViewModel;
 
     String playerUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
@@ -68,8 +68,8 @@ public class RockPaperScissorsFragment extends Fragment
 
     private void initMatch()
     {
-        gameViewModel.createOrJoinMatch();
-        gameViewModel.getMatchWillBeCreatedLiveData().observe(this, matchWillBeCreated ->
+        matchViewModel.createOrJoinMatch();
+        matchViewModel.getMatchWillBeCreatedLiveData().observe(this, matchWillBeCreated ->
         {
             if (matchWillBeCreated)
                 createMatch();
@@ -80,8 +80,8 @@ public class RockPaperScissorsFragment extends Fragment
 
     private void joinMatch()
     {
-        gameViewModel.joinMatch();
-        gameViewModel.getJoinedMatchLiveData().observe(this, joinedMatch ->
+        matchViewModel.joinMatch();
+        matchViewModel.getJoinedMatchLiveData().observe(this, joinedMatch ->
         {
             textViewPlayerName.setText(joinedMatch.name_player2);
             textViewPlayerScore.setText(String.valueOf(joinedMatch.score_player2));
@@ -94,8 +94,8 @@ public class RockPaperScissorsFragment extends Fragment
 
     private void createMatch()
     {
-        gameViewModel.createMatch();
-        gameViewModel.getCreatedMatchLiveData().observe(this, createdMatch ->
+        matchViewModel.createMatch();
+        matchViewModel.getCreatedMatchLiveData().observe(this, createdMatch ->
         {
             textViewPlayerName.setText(createdMatch.name_player1);
             textViewPlayerScore.setText(String.valueOf(createdMatch.score_player1));
@@ -192,6 +192,7 @@ public class RockPaperScissorsFragment extends Fragment
                     w.setCardBackgroundColor(ContextCompat.getColor(getActivity(), R.color.secondaryColor));
 
                     selectedWeaponPosition = weapons.indexOf(w);
+                    matchViewModel.playCard(selectedWeaponPosition);
 
                     weapons.forEach(ww -> ww.setEnabled(false));
                 });
@@ -202,7 +203,7 @@ public class RockPaperScissorsFragment extends Fragment
 
     private void initGameViewModel()
     {
-        gameViewModel = new ViewModelProvider(this).get(RockPaperScissorsViewModel.class);
+        matchViewModel = new ViewModelProvider(this).get(RockPaperScissorsViewModel.class);
     }
 
 }

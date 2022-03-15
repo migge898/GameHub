@@ -48,13 +48,15 @@ public class RockPaperScissorsRepository
             @Override
             public void onDataChange(@NonNull DataSnapshot openMatch)
             {
-                matchWillBeCreatedMutableLiveData.setValue(!openMatch.exists());
 
-                if (!openMatch.exists() || openMatchID.equals(""))
+
+                if (!openMatch.exists())
                     openMatchID = UIDGenerator.randomUID();
                 else
                     // Get the matchID of the first available match in waiting list
                     openMatchID = openMatch.getChildren().iterator().next().getKey();
+
+                matchWillBeCreatedMutableLiveData.setValue(!openMatch.exists());
 
 
             }
@@ -163,5 +165,11 @@ public class RockPaperScissorsRepository
             logErrorMessage(this, "Firebase user is null");
 
         return joinedMatchMutableLiveData;
+    }
+
+    public MutableLiveData<RockPaperScissorsMatch> playCard(int selectedWeapon)
+    {
+        // TODO: 15.03.2022
+        return null;
     }
 }
