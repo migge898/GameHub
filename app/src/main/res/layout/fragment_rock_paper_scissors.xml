@@ -64,9 +64,9 @@
         app:layout_constraintVertical_bias="0.3">
 
 
-        <include layout="@layout/cardview_paper" />
-
         <include layout="@layout/cardview_rock" />
+
+        <include layout="@layout/cardview_paper" />
 
         <include layout="@layout/cardview_scissors" />
 
@@ -76,7 +76,7 @@
     <TextView
         android:id="@+id/textViewStatus"
         android:layout_width="140dp"
-        android:layout_height="40dp"
+        android:layout_height="80dp"
         android:background="@color/white"
         android:textAllCaps="true"
         android:textSize="26sp"

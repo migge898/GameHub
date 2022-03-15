@@ -1,8 +1,6 @@
 package com.mioai.gamehub.games;
 
-import com.google.firebase.database.Exclude;
-
-public class RockPaperScissorMatch extends BaseMatch
+public class RockPaperScissorsMatch extends BaseMatch
 {
     public String id_player1 = "";
     public String id_player2 = "";
@@ -17,12 +15,6 @@ public class RockPaperScissorMatch extends BaseMatch
     public int weapon_player2;
 
     /**
-     * If <code>true</code>, this user created the match.
-     */
-    @Exclude
-    public boolean isCreated;
-
-    /**
      * -1: No match
      * 0: Tie
      * 1: Player 1 wins round
@@ -32,7 +24,7 @@ public class RockPaperScissorMatch extends BaseMatch
      */
     public int status = -1;
 
-    public RockPaperScissorMatch()
+    public RockPaperScissorsMatch()
     {
 
     }

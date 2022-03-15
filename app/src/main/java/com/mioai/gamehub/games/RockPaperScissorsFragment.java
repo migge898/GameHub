@@ -1,6 +1,12 @@
 package com.mioai.gamehub.games;
 
+import android.os.Build;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -8,12 +14,6 @@ import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.mioai.gamehub.R;
@@ -63,33 +63,50 @@ public class RockPaperScissorsFragment extends Fragment
     {
         initLayout(view);
         initGameViewModel();
-        gameViewModel.createOrJoinMatch();
-        updateUI();
+        initMatch();
     }
 
-    private void updateUI()
+    private void initMatch()
     {
-        gameViewModel.getRockPaperScissorsMatch().observe(this, match ->
+        gameViewModel.createOrJoinMatch();
+        gameViewModel.getMatchWillBeCreatedLiveData().observe(this, matchWillBeCreated ->
         {
-            if (match.isCreated)
-            {
-                textViewPlayerName.setText(match.name_player1);
-                textViewPlayerScore.setText(String.valueOf(match.score_player1));
-                textViewEnemyName.setText(match.name_player2);
-                textViewEnemyScore.setText(String.valueOf(match.score_player2));
-            } else
-            {
-                textViewPlayerName.setText(match.name_player2);
-                textViewPlayerScore.setText(String.valueOf(match.score_player2));
-                textViewEnemyName.setText(match.name_player1);
-                textViewEnemyScore.setText(String.valueOf(match.score_player1));
-            }
-            updateStatus(match);
-
+            if (matchWillBeCreated)
+                createMatch();
+            else
+                joinMatch();
         });
     }
 
-    private void updateStatus(RockPaperScissorMatch rpsGame)
+    private void joinMatch()
+    {
+        gameViewModel.joinMatch();
+        gameViewModel.getJoinedMatchLiveData().observe(this, joinedMatch ->
+        {
+            textViewPlayerName.setText(joinedMatch.name_player2);
+            textViewPlayerScore.setText(String.valueOf(joinedMatch.score_player2));
+            textViewEnemyName.setText(joinedMatch.name_player1);
+            textViewEnemyScore.setText(String.valueOf(joinedMatch.score_player1));
+
+            updateStatus(joinedMatch);
+        });
+    }
+
+    private void createMatch()
+    {
+        gameViewModel.createMatch();
+        gameViewModel.getCreatedMatchLiveData().observe(this, createdMatch ->
+        {
+            textViewPlayerName.setText(createdMatch.name_player1);
+            textViewPlayerScore.setText(String.valueOf(createdMatch.score_player1));
+            textViewEnemyName.setText(createdMatch.name_player2);
+            textViewEnemyScore.setText(String.valueOf(createdMatch.score_player2));
+
+            updateStatus(createdMatch);
+        });
+    }
+
+    private void updateStatus(RockPaperScissorsMatch rpsGame)
     {
         boolean isPlayer1 = playerUid.equals(rpsGame.id_player1);
         int status = rpsGame.status;
@@ -166,17 +183,20 @@ public class RockPaperScissorsFragment extends Fragment
 
         weapons = Arrays.asList(cardViewPaper, cardViewRock, cardViewScissors);
 
-        weapons.forEach(w ->
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
         {
-            w.setOnClickListener(v ->
+            weapons.forEach(w ->
             {
-                w.setCardBackgroundColor(ContextCompat.getColor(getActivity(), R.color.secondaryColor));
+                w.setOnClickListener(v ->
+                {
+                    w.setCardBackgroundColor(ContextCompat.getColor(getActivity(), R.color.secondaryColor));
 
-                selectedWeaponPosition = weapons.indexOf(w);
+                    selectedWeaponPosition = weapons.indexOf(w);
 
-                weapons.forEach(ww -> ww.setEnabled(false));
+                    weapons.forEach(ww -> ww.setEnabled(false));
+                });
             });
-        });
+        }
 
     }
 

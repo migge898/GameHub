@@ -12,7 +12,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.mioai.gamehub.games.RockPaperScissorMatch;
+import com.mioai.gamehub.games.RockPaperScissorsMatch;
 import com.mioai.gamehub.utils.UIDGenerator;
 
 import java.util.HashMap;
@@ -27,7 +27,7 @@ public class RockPaperScissorsRepository
     private final static String WAITING = "Waiting";
 
     /**
-     * ID to categorize matches from type {@link RockPaperScissorMatch} in Firebase Realtime Database
+     * ID to categorize matches from type {@link RockPaperScissorsMatch} in Firebase Realtime Database
      */
     private final static String ROCK_PAPER_SCISSORS_ID = "rps";
 
@@ -38,30 +38,25 @@ public class RockPaperScissorsRepository
     private final DatabaseReference matchesRef = database.getReference(MATCHES);
     private final DatabaseReference waitingRef = database.getReference(WAITING);
 
-    private MutableLiveData<RockPaperScissorMatch> rpsGameMutableLiveData;
+    private String openMatchID = "";
 
-    public RockPaperScissorsRepository()
+    public MutableLiveData<Boolean> matchWillBeCreated()
     {
-        this.rpsGameMutableLiveData = new MutableLiveData<>();
-    }
-
-    public MutableLiveData<RockPaperScissorMatch> createOrJoinMatch()
-    {
+        MutableLiveData<Boolean> matchWillBeCreatedMutableLiveData = new MutableLiveData<>();
         waitingRef.child(ROCK_PAPER_SCISSORS_ID).addListenerForSingleValueEvent(new ValueEventListener()
         {
             @Override
             public void onDataChange(@NonNull DataSnapshot openMatch)
             {
-                if (openMatch.exists())
-                {
-                    for (int i = 0; i < openMatch.getChildrenCount(); i++)
-                    {
-                        String matchID = openMatch.getChildren().iterator().next().getKey();
-                        joinMatch(matchID);
-                    }
+                matchWillBeCreatedMutableLiveData.setValue(!openMatch.exists());
 
-                } else
-                    createMatch();
+                if (!openMatch.exists() || openMatchID.equals(""))
+                    openMatchID = UIDGenerator.randomUID();
+                else
+                    // Get the matchID of the first available match in waiting list
+                    openMatchID = openMatch.getChildren().iterator().next().getKey();
+
+
             }
 
             @Override
@@ -71,53 +66,70 @@ public class RockPaperScissorsRepository
             }
         });
 
-        return rpsGameMutableLiveData;
+        return matchWillBeCreatedMutableLiveData;
     }
 
-    private void createMatch()
+    public MutableLiveData<RockPaperScissorsMatch> createMatch()
     {
-
-        RockPaperScissorMatch match = new RockPaperScissorMatch();
+        MutableLiveData<RockPaperScissorsMatch> createdMatchMutableLiveData = new MutableLiveData<>();
 
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
 
         if (firebaseUser != null)
         {
+            RockPaperScissorsMatch createdMatch = new RockPaperScissorsMatch();
+
             // Init game values
-            match.id_player1 = firebaseUser.getUid();
-            match.isCreated = true;
+            createdMatch.id_player1 = firebaseUser.getUid();
 
             // Get player name
-
-            match.name_player1 = firebaseUser.getDisplayName();
-
-            String matchID = UIDGenerator.randomUID();
+            createdMatch.name_player1 = firebaseUser.getDisplayName();
 
             // Add match ID in waiting list to indicate players can join
-            waitingRef.child(ROCK_PAPER_SCISSORS_ID).child(matchID).setValue(true);
+            waitingRef.child(ROCK_PAPER_SCISSORS_ID).child(openMatchID).setValue(true);
 
-            matchesRef.child(ROCK_PAPER_SCISSORS_ID).child(matchID).setValue(match).addOnCompleteListener(task ->
+            DatabaseReference matchRef = matchesRef.child(ROCK_PAPER_SCISSORS_ID).child(openMatchID);
+
+            matchRef.setValue(createdMatch).addOnCompleteListener(task ->
             {
                 if (task.isSuccessful())
                 {
-                    rpsGameMutableLiveData.setValue(match);
+                    createdMatchMutableLiveData.setValue(createdMatch);
+                    matchRef.addValueEventListener(new ValueEventListener()
+                    {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot)
+                        {
+                            createdMatchMutableLiveData.setValue(snapshot.getValue(RockPaperScissorsMatch.class));
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error)
+                        {
+                            logErrorMessage(this, error.getMessage());
+                        }
+                    });
+
                 } else
                     logErrorMessage(this, task);
             });
+
         } else
             logErrorMessage(this, "createMatch(): firebase user is null");
 
-
+        return createdMatchMutableLiveData;
     }
 
-    private void joinMatch(String matchID)
+    public MutableLiveData<RockPaperScissorsMatch> joinMatch()
     {
+        MutableLiveData<RockPaperScissorsMatch> joinedMatchMutableLiveData = new MutableLiveData<>();
+
         FirebaseUser user = firebaseAuth.getCurrentUser();
         if (user != null)
         {
             String username = user.getDisplayName();
             String uid = user.getUid();
-            DatabaseReference matchRef = matchesRef.child(ROCK_PAPER_SCISSORS_ID).child(matchID);
+            DatabaseReference matchRef = matchesRef.child(ROCK_PAPER_SCISSORS_ID).child(openMatchID);
 
             Map<String, Object> matchUpdates = new HashMap<>();
             matchUpdates.put("id_player2", uid);
@@ -127,24 +139,22 @@ public class RockPaperScissorsRepository
             {
                 if (task.isSuccessful())
                 {
-                    matchRef.get().addOnCompleteListener(joinTask ->
+                    matchRef.addValueEventListener(new ValueEventListener()
                     {
-                        if (joinTask.isSuccessful())
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot)
                         {
-                            DataSnapshot data = joinTask.getResult();
-                            RockPaperScissorMatch rpsMatch = data.getValue(RockPaperScissorMatch.class);
-                            if (rpsMatch != null)
-                            {
-                                rpsMatch.isCreated = false;
-                                rpsGameMutableLiveData.setValue(rpsMatch);
+                            joinedMatchMutableLiveData.setValue(snapshot.getValue(RockPaperScissorsMatch.class));
 
-                                // Delete entry in waiting reference
-                                waitingRef.child(ROCK_PAPER_SCISSORS_ID).child(matchID).removeValue();
-                            } else
-                                logErrorMessage(this, "RPS-Match is null");
-
+                            // Delete entry in waiting reference
+                            waitingRef.child(ROCK_PAPER_SCISSORS_ID).child(openMatchID).removeValue();
                         }
 
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error)
+                        {
+                            logErrorMessage(this, error.getMessage());
+                        }
                     });
                 } else
                     logErrorMessage(this, task);
@@ -152,5 +162,6 @@ public class RockPaperScissorsRepository
         } else
             logErrorMessage(this, "Firebase user is null");
 
+        return joinedMatchMutableLiveData;
     }
 }
