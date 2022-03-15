@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="avatar_body">
+        <item>Realistic</item>
+        <item>Round</item>
+    </string-array>
+</resources>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="avatar_mouths">
+        <item>:P</item>
+        <item>:O</item>
+        <item>Sad</item>
+        <item>Smile</item>
+    </string-array>
+</resources>

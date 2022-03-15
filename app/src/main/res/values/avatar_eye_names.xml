@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="avatar_eyes">
+        <item>Alien</item>
+        <item>Angry</item>
+        <item>Shocked</item>
+        <item>Sly</item>
+    </string-array>
+</resources>
