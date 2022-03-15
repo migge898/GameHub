@@ -15,6 +15,10 @@ public class User implements Serializable
     private boolean isCreated;
     private boolean isAuthenticated;
 
+    public User()
+    {
+
+    }
     public User(String uid, String username, String email)
     {
         this(uid, username, email, "");
