@@ -36,7 +36,7 @@
             android:id="@+id/action_mainFragment_to_firstFragment"
             app:destination="@id/firstFragment"
             app:popUpTo="@id/my_nav"
-            app:popUpToInclusive="true"/>
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_mainFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
@@ -81,5 +81,16 @@
         android:name="com.mioai.gamehub.FriendListFragment"
         android:label="Friend List"
         tools:layout="@layout/fragment_friend_list" />
+    <fragment
+        android:id="@+id/avatarGen"
+        android:name="com.mioai.gamehub.AvatarGenerator"
+        tools:layout="@layout/avatar_generator">
 
+    </fragment>
+    <fragment
+        android:id="@+id/navProfilePage"
+        android:name="com.mioai.gamehub.ProfilePage"
+        tools:layout="@layout/fragment_profilepage">
+
+    </fragment>
 </navigation>

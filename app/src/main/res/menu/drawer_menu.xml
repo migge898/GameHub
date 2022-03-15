@@ -7,6 +7,15 @@
             android:icon="@drawable/ic_home"
             android:title="Play" />
         <item
+            android:id="@id/navProfilePage"
+            android:icon="@drawable/ic_about"
+            android:title="Profil" />
+        <item
+            android:id="@id/avatarGen"
+            android:icon="@drawable/ic_about"
+            android:title="Avatar" />
+
+        <item
             android:id="@id/friendListFragment"
             android:icon="@drawable/ic_friendlist"
             android:title="Friend List" />
@@ -19,13 +28,14 @@
             android:icon="@drawable/ic_about"
             android:title="About" />
 
+
     </group>
     <item android:title="">
         <menu>
             <item
                 android:id="@+id/mainFragment"
-                android:title="Log out"
-                android:icon="@drawable/ic_logout">
+                android:icon="@drawable/ic_logout"
+                android:title="Log out">
 
             </item>
         </menu>
