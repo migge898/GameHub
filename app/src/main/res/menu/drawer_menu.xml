@@ -7,9 +7,9 @@
             android:icon="@drawable/ic_play"
             android:title="Play" />
         <item
-            android:id="@id/secondFragment"
+            android:id="@id/friendListFragment"
             android:icon="@drawable/ic_friendlist"
-            android:title="Friendlist" />
+            android:title="Friend List" />
         <item
             android:id="@id/settingsFragment"
             android:icon="@drawable/ic_settings"
