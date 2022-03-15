@@ -33,4 +33,6 @@
     <string name="username">Username</string>
     <string name="accept">Accept</string>
     <string name="googleSignInFailed">Google sign in failed!</string>
+    <string name="insert_playername">Insert playername</string>
+    <string name="add_player">Add player</string>
 </resources>
