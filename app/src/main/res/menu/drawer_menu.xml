@@ -4,7 +4,7 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@id/firstFragment"
-            android:icon="@drawable/ic_play"
+            android:icon="@drawable/ic_home"
             android:title="Play" />
         <item
             android:id="@id/friendListFragment"
