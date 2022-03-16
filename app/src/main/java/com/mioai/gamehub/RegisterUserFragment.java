@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
@@ -118,34 +122,48 @@ public class RegisterUserFragment extends Fragment
 
         progressBar.setVisibility(View.VISIBLE);
 
-
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task ->
         {
             if (task.isSuccessful())
             {
                 FirebaseUser firebaseUser = mAuth.getCurrentUser();
 
-                User user = new User(
-                        firebaseUser.getUid(),
-                        username,
-                        email,
-                        age);
+                UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                        .setDisplayName(username)
+                        .build();
 
-                FirebaseDatabase.getInstance("https://gamehub-4786a-default-rtdb.europe-west1.firebasedatabase.app/")
-                        .getReference("Users")
-                        .child(FirebaseAuth.getInstance()
-                                .getCurrentUser().getUid()).setValue(user).addOnCompleteListener(task1 ->
-                {
-                    if (task1.isSuccessful())
-                    {
-                        Toast.makeText(getActivity(), getString(R.string.register_success), Toast.LENGTH_LONG).show();
-                        navController.navigate(R.id.action_registerUserFragment_to_firstFragment);
-                    } else
-                    {
-                        Toast.makeText(getActivity(), getString(R.string.register_failed), Toast.LENGTH_LONG).show();
-                    }
-                    progressBar.setVisibility(View.GONE);
-                });
+                firebaseUser.updateProfile(profileUpdates)
+                        .addOnCompleteListener(updateTask ->
+                        {
+                            if (updateTask.isSuccessful())
+                            {
+                                User user = new User(
+                                        firebaseUser.getUid(),
+                                        firebaseUser.getDisplayName(),
+                                        email,
+                                        age);
+
+                                FirebaseDatabase.getInstance("https://gamehub-4786a-default-rtdb.europe-west1.firebasedatabase.app/")
+                                        .getReference("Users")
+                                        .child(FirebaseAuth.getInstance()
+                                                .getCurrentUser().getUid()).setValue(user).addOnCompleteListener(task1 ->
+                                {
+                                    if (task1.isSuccessful())
+                                    {
+                                        Toast.makeText(getActivity(), getString(R.string.register_success), Toast.LENGTH_LONG).show();
+                                        navController.navigate(R.id.action_registerUserFragment_to_firstFragment);
+                                    } else
+                                    {
+                                        Toast.makeText(getActivity(), getString(R.string.register_failed), Toast.LENGTH_LONG).show();
+                                    }
+                                    progressBar.setVisibility(View.GONE);
+                                });
+                                Toast.makeText(getActivity(), "USER UPDATED!", Toast.LENGTH_SHORT).show();
+                            } else
+                                Toast.makeText(getActivity(), "ERROR UPDATING SUER!", Toast.LENGTH_SHORT).show();
+                        });
+
+
             } else
             {
                 Toast.makeText(getActivity(), getString(R.string.register_failed), Toast.LENGTH_LONG).show();
@@ -153,6 +171,7 @@ public class RegisterUserFragment extends Fragment
             }
 
         });
+
 
     }
 }

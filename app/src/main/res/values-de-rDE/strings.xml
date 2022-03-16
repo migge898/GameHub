@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Schere Stein Papier - Multiplayer</string>
-    <string name="papier">Papier</string>
     <string name="waiting">Warte…</string>
     <string name="tie">Unentschieden</string>
     <string name="lost">Verloren</string>
@@ -28,4 +26,10 @@
     <string name="username">Benutzername</string>
     <string name="accept">Bestätigen</string>
     <string name="googleSignInFailed">Google Login fehlgeschlagen!</string>
+    <string name="rock">Stein</string>
+    <string name="paper">Papier</string>
+    <string name="scissors">Schere</string>
+    <string name="rock_paper_scissors">Schere Stein Papier</string>
+    <string name="game_won">Spiel gewonnen!</string>
+    <string name="game_lost">Spiel verloren!</string>
 </resources>

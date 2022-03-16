@@ -1,9 +1,8 @@
 <resources>
-    <string name="app_name">GameHub</string>
+    <string name="app_name" translatable="false">GameHub</string>
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="dummy_button" translatable="false">Dummy Button</string>
     <string name="dummy_content" translatable="false">DUMMY\nCONTENT</string>
-    <string name="papier">papier</string>
     <string name="info" translatable="false">Info:</string>
     <string name="waiting">Waiting…</string>
     <string name="tie">Tie</string>
@@ -33,6 +32,12 @@
     <string name="username">Username</string>
     <string name="accept">Accept</string>
     <string name="googleSignInFailed">Google sign in failed!</string>
+    <string name="rock">Rock</string>
+    <string name="paper">Paper</string>
+    <string name="scissors">Scissors</string>
+    <string name="rock_paper_scissors">Rock Paper Scissors</string>
+    <string name="game_won">Game won!</string>
+    <string name="game_lost">Game lost!</string>
     <string name="add_player">Add</string>
     <string name="insert_playername">Insert player name</string>
     <string name="show_profile">Show profile</string>
