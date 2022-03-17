@@ -42,5 +42,7 @@
     <string name="insert_playername">Insert player name</string>
     <string name="show_profile">Show profile</string>
     <string name="delete_friend">Delete</string>
-    <string name="Name">Name</string>
+    <string name="Name" translatable="false">Name</string>
+    <string name="send_password_reset">Send password reset</string>
+    <string name="back_to_login">Back to Login</string>
 </resources>

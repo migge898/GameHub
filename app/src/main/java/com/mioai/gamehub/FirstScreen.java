@@ -7,9 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 
 
 public class FirstScreen extends Fragment
@@ -20,16 +20,17 @@ public class FirstScreen extends Fragment
 
     final private String[] iconNames = {"RockPaperScissor", "Coming Soon"};
     final private int[] iconSrc = {R.drawable.ic_paperhandicon, R.drawable.ic_comingsoon};
+    private final int[] iconLinks = {R.id.rockPaperScissorsFragment};
 
 
     @Override
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
     {
         //changing the Style of the Grid
         int spanCount = 3; // Number of columns
         int spacing = 50; // 50px
-        boolean includeEdge = true;
 
         //Init the view and adapter
         View view = inflater.inflate(R.layout.fragment_first_screen, container, false);
@@ -39,12 +40,18 @@ public class FirstScreen extends Fragment
         recyclerView.setAdapter(recAdapter);
         //TODO make onCLick Listener for the Recycler
         //view.findViewById(R.id.rvIcons1).setOnClickListener(c);
-        //recAdapter.setClickListener(this);
+        recAdapter.setClickListener(this::onItemClick);
 
 
         //decorating the RecyclerView
-        recyclerView.addItemDecoration(new GridSpacingItemDecoration(spanCount, spacing, includeEdge));
+        recyclerView.addItemDecoration(new GridSpacingItemDecoration(spanCount, spacing, true));
 
         return view;
+    }
+
+    private void onItemClick(View v, int pos)
+    {
+        if (pos == 0)
+            Navigation.findNavController(v).navigate(iconLinks[pos]);
     }
 }

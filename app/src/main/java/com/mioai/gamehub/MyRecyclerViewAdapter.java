@@ -1,6 +1,7 @@
 package com.mioai.gamehub;
 
 import android.content.Context;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     private String[] mData;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
+    private View view;
 
 
     // data is passed into the constructor
@@ -27,7 +29,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     // inflates the cell layout from xml when needed
 
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.icon_item, parent, false);
+        view = mInflater.inflate(R.layout.icon_item, parent, false);
         return new ViewHolder(view);
     }
 
@@ -35,6 +37,12 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.myTextView.setText(mData[position]);
         holder.imageView.setImageResource(icons[position]);
+
+
+        // Set Click Animation on views
+        TypedValue outValue = new TypedValue();
+        view.getContext().getTheme().resolveAttribute(android.R.attr.selectableItemBackground, outValue, true);
+        holder.imageView.setBackgroundResource(outValue.resourceId);
     }
 
     // total number of cells

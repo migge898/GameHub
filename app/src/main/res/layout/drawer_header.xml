@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawerHeader"
     android:layout_width="match_parent"
     android:layout_height="176dp"
     android:background="@drawable/side_nav_bar"
@@ -29,17 +30,16 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_stock_profile" />
 
-    <EditText
-        android:id="@+id/editTextUsername"
+    <TextView
+        android:layout_marginStart="4dp"
+        android:id="@+id/textViewUsernameDrawer"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
         android:backgroundTint="@android:color/transparent"
-        android:ems="10"
-        android:hint="Username"
-        android:inputType="textPersonName"
-        android:singleLine="true"
+        android:minHeight="48dp"
+        android:textSize="26sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageViewProfilePic"
         app:layout_constraintTop_toTopOf="parent" />

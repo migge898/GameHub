@@ -20,7 +20,7 @@
             <TextView
                 android:id="@+id/textviewPlayerName"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="80dp"
                 android:text="playername"
                 android:textColor="@color/black"
                 android:textSize="26sp"
@@ -63,7 +63,7 @@
             <TextView
                 android:id="@+id/textviewEnemyName"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="80dp"
                 android:text="@string/waiting"
                 android:textColor="@color/black"
                 android:textSize="26sp"

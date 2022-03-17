@@ -32,4 +32,10 @@
     <string name="rock_paper_scissors">Schere Stein Papier</string>
     <string name="game_won">Spiel gewonnen!</string>
     <string name="game_lost">Spiel verloren!</string>
+    <string name="add_player">Hinzufügen</string>
+    <string name="insert_playername">Spielername eingeben</string>
+    <string name="show_profile">Profil anzeigen</string>
+    <string name="delete_friend">Löschen</string>
+    <string name="send_password_reset">Sende Passwort Reset</string>
+    <string name="back_to_login">Zurück zum Login</string>
 </resources>

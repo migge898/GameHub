@@ -43,14 +43,33 @@ public class RockPaperScissorsRepository
     private int weaponPlayer1;
     private int weaponPlayer2;
 
+    /**
+     * Constants for internal status flag
+     */
+    private final static int WAITING_FOR_PLAYER = -1;
+    private final static int TIE = 0;
+    private final static int PLAYER_1_WINS_ROUND = 1;
+    private final static int PLAYER_2_WINS_ROUND = 2;
+    private final static int PLAYER_1_WINS_MATCH = 11;
+    private final static int PLAYER_2_WINS_MATCH = 22;
     private int previousStatus = -1;
 
-    // Careful: Positions hardcoded to wepons-List!
-    private static final int PAPER = 0;
-    private static final int ROCK = 1;
+    /**
+     * Careful: Positions hardcoded to weapons List in {@link com.mioai.gamehub.games.RockPaperScissorsFragment}
+     */
+    private static final int NO_WEAPON_SELECTED = -1;
+    private static final int ROCK = 0;
+    private static final int PAPER = 1;
     private static final int SCISSORS = 2;
 
     private String openMatchID = "";
+
+    private RockPaperScissorsMatch rpsMatch;
+
+    public RockPaperScissorsRepository()
+    {
+        this.rpsMatch = new RockPaperScissorsMatch();
+    }
 
     public MutableLiveData<Boolean> matchWillBeCreated()
     {
@@ -116,8 +135,11 @@ public class RockPaperScissorsRepository
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot)
                         {
+
+                            rpsMatch = snapshot.getValue(RockPaperScissorsMatch.class);
                             updateStatus();
-                            createdMatchMutableLiveData.setValue(snapshot.getValue(RockPaperScissorsMatch.class));
+                            createdMatchMutableLiveData.setValue(rpsMatch);
+
                         }
 
                         @Override
@@ -161,8 +183,10 @@ public class RockPaperScissorsRepository
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot)
                         {
+
+                            rpsMatch = snapshot.getValue(RockPaperScissorsMatch.class);
                             updateStatus();
-                            joinedMatchMutableLiveData.setValue(snapshot.getValue(RockPaperScissorsMatch.class));
+                            joinedMatchMutableLiveData.setValue(rpsMatch);
 
                             // Delete entry in waiting reference
                             waitingRef.child(ROCK_PAPER_SCISSORS_ID).child(openMatchID).removeValue();
@@ -185,17 +209,25 @@ public class RockPaperScissorsRepository
 
     private void updateStatus()
     {
-        DatabaseReference matchRef = matchesRef.child(ROCK_PAPER_SCISSORS_ID).child(openMatchID);
-        int status = -1;
-        boolean player1PlayedCard = weaponPlayer1 != -1;
-        boolean player2PlayedCard = weaponPlayer2 != -1;
+        int status;
+        boolean player1PlayedCard = rpsMatch.weapon_player1 != NO_WEAPON_SELECTED;
+        boolean player2PlayedCard = rpsMatch.weapon_player2 != NO_WEAPON_SELECTED;
         if (player1PlayedCard && player2PlayedCard)
+        {
             status = fight();
+
+        } else
+            status = WAITING_FOR_PLAYER;
 
         if (status != previousStatus)
         {
+            DatabaseReference matchRef = matchesRef.child(ROCK_PAPER_SCISSORS_ID).child(openMatchID);
             Map<String, Object> matchUpdates = new HashMap<>();
             matchUpdates.put("status", status);
+
+            matchUpdates.put("score_player1", rpsMatch.score_player1);
+            matchUpdates.put("score_player2", rpsMatch.score_player2);
+
             matchRef.updateChildren(matchUpdates);
             previousStatus = status;
         }
@@ -205,19 +237,43 @@ public class RockPaperScissorsRepository
 
     private int fight()
     {
-        int status = -1;
+        int status;
 
-        if (weaponPlayer1 == weaponPlayer2)
-            status = 0;
+        weaponPlayer1 = rpsMatch.weapon_player1;
+        weaponPlayer2 = rpsMatch.weapon_player2;
+        if (rpsMatch.weapon_player1 == rpsMatch.weapon_player2)
+            status = TIE;
         else if (weaponPlayer1 == ROCK)
-            status = (weaponPlayer2 == SCISSORS) ? 1 : 2;
-        else if (weaponPlayer1 == PAPER)
-            status = (weaponPlayer2 == ROCK) ? 1 : 2;
-        else
-            status = (weaponPlayer2 == PAPER) ? 1 : 2;
+        {
+
+            if (weaponPlayer2 == SCISSORS)
+                status = statusPlayer1Wins();
+            else status = statusPlayer2Wins();
+
+        } else if (weaponPlayer1 == PAPER)
+        {
+            if (weaponPlayer2 == ROCK)
+                status = statusPlayer1Wins();
+            else status = statusPlayer2Wins();
+        } else
+        {
+            if (weaponPlayer2 == PAPER)
+                status = statusPlayer1Wins();
+            else status = statusPlayer2Wins();
+        }
 
         return status;
 
+    }
+
+    private int statusPlayer1Wins()
+    {
+        return ++rpsMatch.score_player1 == 3 ? PLAYER_1_WINS_MATCH : PLAYER_1_WINS_ROUND;
+    }
+
+    private int statusPlayer2Wins()
+    {
+        return ++rpsMatch.score_player2 == 3 ? PLAYER_2_WINS_MATCH : PLAYER_2_WINS_ROUND;
     }
 
     public void playCard(int selectedWeapon)

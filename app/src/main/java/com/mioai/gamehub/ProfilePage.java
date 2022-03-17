@@ -12,7 +12,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.StringTokenizer;
 
@@ -37,9 +38,7 @@ public class ProfilePage extends Fragment {
         txt_lvlXp = view.findViewById(R.id.xp_display);
         lvlBar = view.findViewById(R.id.bar_level_up);
         //todo fehler?? beim verwenden von firebase für profilename und setze die werte für die anderen textviews ein
-        //txt_profileName.setText(FirebaseAuth.getInstance("https://gamehub-4786a-default-rtdb.europe-west1.firebasedatabase.app/").getCurrentUser().getDisplayName());
-        view.findViewById(R.id.txt_backToSecondFragment).setOnClickListener((v) ->
-                Navigation.findNavController(v).navigate(R.id.navigateToSecondFragment));
+        txt_profileName.setText(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
 
         int currentXp;
         int maxXp=1000;

@@ -1,7 +1,6 @@
 package com.mioai.gamehub.repository;
 
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
 
@@ -11,7 +10,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.mioai.gamehub.R;
 import com.mioai.gamehub.User;
 
 public class AuthRepository
@@ -41,7 +39,7 @@ public class AuthRepository
                     User user = new User(uid, name, email);
                     user.setNew(isNewUser);
                     authenticatedUserMutableLiveData.setValue(user);
-                } else if (!firebaseUser.isEmailVerified())
+                } else if (firebaseUser != null && !firebaseUser.isEmailVerified())
                 {
                     firebaseUser.sendEmailVerification();
                 }

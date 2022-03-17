@@ -1,6 +1,5 @@
 package com.mioai.gamehub.games;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,8 +41,8 @@ public class RockPaperScissorsFragment extends Fragment
     private int selectedWeaponPosition = -1;
 
     // Careful: Positions hardcoded to wepons-List!
-    private static final int PAPER = 0;
-    private static final int ROCK = 1;
+    private static final int ROCK = 0;
+    private static final int PAPER = 1;
     private static final int SCISSORS = 2;
 
     private RockPaperScissorsViewModel matchViewModel;
@@ -91,11 +90,11 @@ public class RockPaperScissorsFragment extends Fragment
 
             if (joinedMatch.weapon_player1 != -1)
             {
-                Toast.makeText(getActivity(), "Enemy played "+ joinedMatch.weapon_player1, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Enemy played " + joinedMatch.weapon_player1, Toast.LENGTH_SHORT).show();
             }
             if (joinedMatch.weapon_player2 != -1)
             {
-                Toast.makeText(getActivity(), "You played "+ joinedMatch.weapon_player2, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "You played " + joinedMatch.weapon_player2, Toast.LENGTH_SHORT).show();
             }
 
             updateStatus(joinedMatch);
@@ -114,11 +113,11 @@ public class RockPaperScissorsFragment extends Fragment
 
             if (createdMatch.weapon_player1 != -1)
             {
-                Toast.makeText(getActivity(), "You played "+ createdMatch.weapon_player1, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "You played " + createdMatch.weapon_player1, Toast.LENGTH_SHORT).show();
             }
             if (createdMatch.weapon_player2 != -1)
             {
-                Toast.makeText(getActivity(), "Enemy played "+ createdMatch.weapon_player2, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Enemy played " + createdMatch.weapon_player2, Toast.LENGTH_SHORT).show();
             }
 
 
@@ -201,23 +200,21 @@ public class RockPaperScissorsFragment extends Fragment
 
         textViewStatus = view.findViewById(R.id.textViewStatus);
 
-        weapons = Arrays.asList(cardViewPaper, cardViewRock, cardViewScissors);
+        weapons = Arrays.asList(cardViewRock, cardViewPaper, cardViewScissors);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+        weapons.forEach(w ->
         {
-            weapons.forEach(w ->
+            w.setOnClickListener(v ->
             {
-                w.setOnClickListener(v ->
-                {
-                    w.setCardBackgroundColor(ContextCompat.getColor(getActivity(), R.color.secondaryColor));
+                w.setCardBackgroundColor(ContextCompat.getColor(getActivity(), R.color.secondaryColor));
 
-                    selectedWeaponPosition = weapons.indexOf(w);
-                    matchViewModel.playCard(selectedWeaponPosition);
+                selectedWeaponPosition = weapons.indexOf(w);
+                weaponLocked = true;
+                matchViewModel.playCard(selectedWeaponPosition);
 
-                    weapons.forEach(ww -> ww.setEnabled(false));
-                });
+                weapons.forEach(ww -> ww.setEnabled(false));
             });
-        }
+        });
 
     }
 

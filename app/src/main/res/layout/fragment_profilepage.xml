@@ -121,26 +121,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bar_level_up" />
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/backHeight"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:cardBackgroundColor="@color/teal_700"
-        >
-
-        <TextView
-        android:id="@+id/txt_backToSecondFragment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:textAlignment="center"
-        android:text="Back"
-        android:textSize="20sp"
-        />
-        </androidx.cardview.widget.CardView>
-
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/NameHeight"
@@ -148,13 +128,6 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="120dp" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/backHeight"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="600dp" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/leftGuide"

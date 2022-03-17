@@ -28,12 +28,14 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.mioai.gamehub.viewmodel.AuthViewModel;
 
 public class LoginFragment extends Fragment
 {
     private TextView register;
+    private TextView forgotPassword;
 
     private GoogleSignInClient mGoogleSignInClient;
     private AuthViewModel authViewModel;
@@ -44,6 +46,8 @@ public class LoginFragment extends Fragment
     private Button buttonLogin;
 
     private NavController navController;
+
+    private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -59,6 +63,7 @@ public class LoginFragment extends Fragment
     {
         loginFragmentView = view;
         register = loginFragmentView.findViewById(R.id.register);
+        forgotPassword = loginFragmentView.findViewById(R.id.forgotPassword);
         editTextEmail = loginFragmentView.findViewById(R.id.login_email);
         editTextPassword = loginFragmentView.findViewById(R.id.login_password);
         buttonLogin = loginFragmentView.findViewById(R.id.login);
@@ -73,6 +78,9 @@ public class LoginFragment extends Fragment
         {
             navController.navigate(R.id.registerUserFragment);
         });
+
+        forgotPassword.setOnClickListener(v ->
+                navController.navigate(R.id.action_loginFragment_to_forgotPasswordFragment));
 
         buttonLogin.setOnClickListener(v ->
         {

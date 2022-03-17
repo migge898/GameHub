@@ -2,8 +2,11 @@ package com.mioai.gamehub;
 
 
 import android.os.Bundle;
+import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -11,14 +14,16 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
-public class MainActivity extends AppCompatActivity
+public class MainActivity extends AppCompatActivity implements FirebaseAuth.AuthStateListener
 {
     private NavController navController;
     private DrawerLayout drawerLayout;
     private AppBarConfiguration appBarConfiguration;
     private NavController.OnDestinationChangedListener listener;
 
+    private TextView textViewUsernameDrawer;
 
 
     @Override
@@ -31,10 +36,16 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = findViewById(R.id.navigationView);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-        appBarConfiguration = new AppBarConfiguration.Builder(R.id.firstFragment, R.id.secondFragment, R.id.settingsFragment, R.id.aboutFragment, R.id.friendListFragment)
+        textViewUsernameDrawer = navigationView.getHeaderView(0).findViewById(R.id.textViewUsernameDrawer);
+
+        appBarConfiguration = new AppBarConfiguration.Builder(R.id.firstFragment, R.id.settingsFragment,
+                R.id.aboutFragment, R.id.friendListFragment, R.id.navProfilePage, R.id.avatarGen)
                 .setOpenableLayout(drawerLayout)
                 .build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+
+        FirebaseAuth.getInstance().addAuthStateListener(this);
+
 
         listener = (_c, destination, _b) ->
         {
@@ -46,6 +57,15 @@ public class MainActivity extends AppCompatActivity
             } else
                 drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
         };
+
+        navigationView.getMenu().findItem(R.id.menu_logout).setOnMenuItemClickListener(i ->
+        {
+
+            FirebaseAuth.getInstance().signOut();
+            navController.navigate(R.id.action_firstFragment_to_mainFragment);
+            drawerLayout.closeDrawer(GravityCompat.START);
+            return true;
+        });
 
     }
 
@@ -72,4 +92,14 @@ public class MainActivity extends AppCompatActivity
                 || super.onSupportNavigateUp();
     }
 
+    @Override
+    public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth)
+    {
+        if (firebaseAuth.getCurrentUser() != null)
+        {
+            textViewUsernameDrawer.setText(firebaseAuth.getCurrentUser().getDisplayName() != null ?
+                    firebaseAuth.getCurrentUser().getDisplayName() : "-------");
+            navController.navigate(R.id.firstFragment);
+        }
+    }
 }
